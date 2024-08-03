@@ -5,15 +5,20 @@ VisualStudioVersion = 17.10.34928.147
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{670F79B4-96E2-4C4B-9DC2-CC45321F4C22}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodRecipes.Domain", "FoodRecipes.Domain\FoodRecipes.Domain.csproj", "{0D550186-F379-4E4E-A3BD-9D8D34A9671F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodRecipes.Domain", "FoodRecipes.Domain\FoodRecipes.Domain.csproj", "{0D550186-F379-4E4E-A3BD-9D8D34A9671F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodRecipes.Application", "FoodRecipes.Application\FoodRecipes.Application.csproj", "{7EC3AF38-B8A2-499A-B0C5-E8822B6D0299}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodRecipes.Application", "FoodRecipes.Application\FoodRecipes.Application.csproj", "{7EC3AF38-B8A2-499A-B0C5-E8822B6D0299}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodRecipes.Presentation", "FoodRecipes.Presentation\FoodRecipes.Presentation.csproj", "{2CC165A4-3CDB-446B-9398-EE386507F731}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodRecipes.Presentation", "FoodRecipes.Presentation\FoodRecipes.Presentation.csproj", "{2CC165A4-3CDB-446B-9398-EE386507F731}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodRecipes.Infrastructure", "FoodRecipes.Infrastructure\FoodRecipes.Infrastructure.csproj", "{CAE3B3F9-CE42-4E62-80BE-9838D2444090}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodRecipes.Infrastructure", "FoodRecipes.Infrastructure\FoodRecipes.Infrastructure.csproj", "{CAE3B3F9-CE42-4E62-80BE-9838D2444090}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodRecipes.Persistence", "FoodRecipes.Persistence\FoodRecipes.Persistence.csproj", "{9CC6AC5F-EE58-4C39-ADCF-DE46C01953AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodRecipes.Persistence", "FoodRecipes.Persistence\FoodRecipes.Persistence.csproj", "{9CC6AC5F-EE58-4C39-ADCF-DE46C01953AE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{9A92FE54-F110-4625-96B4-AA9A29B92C5B}"
+	ProjectSection(SolutionItems) = preProject
+		DomainModels.md = DomainModels.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
