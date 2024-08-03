@@ -1,4 +1,4 @@
-﻿namespace FoodRecipes.Domain.Common.Primitives;
+﻿namespace FoodRecipes.Domain.Primitives;
 
 public abstract class AggregateRoot : Entity
 {
