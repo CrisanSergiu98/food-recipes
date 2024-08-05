@@ -8,8 +8,8 @@ The `Recipe` aggregate represents a recipe with a title, description, and collec
 
 - **Title** (`RecipeTitle`): The title of the recipe.
 - **Description** (`RecipeDescription`): The description of the recipe.
-
-### JSON Representation
+- **RecipeIngredients** (`_recipeIngredients`): Readonly collection of RecipeIngredient value objects.
+- **RecipeSteps** (`_recipeSteps`): Readonly collection of RecipeStep value objects.
 
 ```json
 {
@@ -52,8 +52,6 @@ The `Ingredient` aggregate represents an ingredient with a name and description.
 - **Name** (`IngredientName`): The name of the ingredient.
 - **Description** (`IngredientDescription`): A description of the ingredient.
 
-### JSON Representation
-
 ```json
 {
   "Id": "b84e31e2-9f56-4a3e-9c72-bd792476438f",
@@ -74,8 +72,6 @@ The `RecipeIngredient` value object represents an ingredient used in a recipe, i
 - **Quantity** (`float`): Amount of the ingredient.
 - **Measurement** (`Measurement`): The unit of measurement for the quantity.
 
-### JSON Representation
-
 ```json
 {
   "IngredientId": "a2b95a44-fb6b-4d42-b2a4-5b624e53b2e1",
@@ -94,8 +90,6 @@ The `RecipeStep` value object represents a step in the recipe, including its ste
 
 - **Number** (`int`): The step number in the recipe.
 - **Description** (`RecipeStepDescription`): Description of the step.
-
-### JSON Representation
 
 ```json
 {
