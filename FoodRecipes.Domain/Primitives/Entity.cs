@@ -1,75 +1,97 @@
-﻿namespace FoodRecipes.Domain.Primitives;
-
-public abstract class Entity : IEquatable<Entity>
+﻿namespace FoodRecipes.Domain.Primitives
 {
-    // Protected Constructor - only derived members can construct instances of the class (and derived instances) using that constructor.
-    protected Entity(Guid id)
+    /// <summary>
+    /// Represents a base class for entities, which have a unique identifier and can be compared based on their identity.
+    /// </summary>
+    public abstract class Entity : IEquatable<Entity>
     {
-        Id = id;
-    }
-
-    // Since this is the primary identifier and it does not change we are using "init" so the value set once when the object is initialized.
-    public Guid Id { get; private init; }
-
-    // Overriding the Object Equals method
-    public override bool Equals(object? obj)
-    {
-        // -the object cannot be null, has to be the same Type and to be an Entity
-        if (obj is null)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Entity"/> class with a specified unique identifier.
+        /// </summary>
+        /// <param name="id">The unique identifier for the entity.</param>
+        protected Entity(Guid id)
         {
-            return false;
+            Id = id;
         }
 
-        if (obj.GetType() != GetType())
+        /// <summary>
+        /// Gets the unique identifier for the entity.
+        /// </summary>
+        public Guid Id { get; private init; }
+
+        /// <summary>
+        /// Determines whether the specified object is equal to the current <see cref="Entity"/>.
+        /// </summary>
+        /// <param name="obj">The object to compare with the current <see cref="Entity"/>.</param>
+        /// <returns><c>true</c> if the specified object is equal to the current <see cref="Entity"/>; otherwise, <c>false</c>.</returns>
+        public override bool Equals(object? obj)
         {
-            return false;
+            if (obj is null)
+            {
+                return false;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            if (obj is not Entity entity)
+            {
+                return false;
+            }
+
+            return entity.Id == Id;
         }
 
-        if (obj is not Entity entity)
+        /// <summary>
+        /// Determines whether the specified <see cref="Entity"/> is equal to the current <see cref="Entity"/>.
+        /// </summary>
+        /// <param name="other">The <see cref="Entity"/> to compare with the current <see cref="Entity"/>.</param>
+        /// <returns><c>true</c> if the specified <see cref="Entity"/> is equal to the current <see cref="Entity"/>; otherwise, <c>false</c>.</returns>
+        public bool Equals(Entity? other)
         {
-            return false;
+            if (other is null)
+            {
+                return false;
+            }
+
+            if (other.GetType() != GetType())
+            {
+                return false;
+            }
+            return other.Id == Id;
         }
 
-        // Two Entities are considered equal if they have the same ID.
-        return entity.Id == Id;
-    }
-
-    // Inhereted from IEquatable
-    public bool Equals(Entity? other)
-    {
-        // - the other entity cannot be null and has to have the same type.
-        if (other is null)
+        /// <summary>
+        /// Serves as the default hash function.
+        /// </summary>
+        /// <returns>A hash code for the current <see cref="Entity"/>.</returns>
+        public override int GetHashCode()
         {
-            return false;
+            return Id.GetHashCode() * 41;
         }
 
-        if (other.GetType() != GetType())
+        /// <summary>
+        /// Determines whether two <see cref="Entity"/> instances are equal.
+        /// </summary>
+        /// <param name="first">The first <see cref="Entity"/> instance to compare.</param>
+        /// <param name="second">The second <see cref="Entity"/> instance to compare.</param>
+        /// <returns><c>true</c> if the instances are equal; otherwise, <c>false</c>.</returns>
+        public static bool operator ==(Entity? first, Entity? second)
         {
-            return false;
+            return first is not null && second is not null && first.Equals(second);
         }
 
-        // Two Entities are equal if they have the same ID
-        return other.Id == Id;
-    }
-
-    // Mostly exists for one purpose, to serve as a hash function when the object is used as a key in a hash table.
-    // HashTable example: Dictionary<TKey, TValue> is the most commonly used hash table implementation.
-    public override int GetHashCode()
-    {
-        return Id.GetHashCode() * 41;
-    }
-
-    // Overloading the "==" opperator.
-    public static bool operator ==(Entity? first, Entity? second)
-    {
-        // The entities can't be null and they have to be equal for this to return "true"
-        return first is not null && second is not null && first.Equals(second);
-    }
-
-    // Overloading the "!=" opperator
-    public static bool operator !=(Entity? first, Entity? second)
-    {
-        // The entities can't be null and they have to be equal for this to return "false"
-        return first is not null && second is not null && !first.Equals(second);
+        /// <summary>
+        /// Determines whether two <see cref="Entity"/> instances are not equal.
+        /// </summary>
+        /// <param name="first">The first <see cref="Entity"/> instance to compare.</param>
+        /// <param name="second">The second <see cref="Entity"/> instance to compare.</param>
+        /// <returns><c>true</c> if the instances are not equal; otherwise, <c>false</c>.</returns>
+        public static bool operator !=(Entity? first, Entity? second)
+        {
+            return first is not null && second is not null && !first.Equals(second);
+        }
     }
 }
