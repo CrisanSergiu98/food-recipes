@@ -1,8 +1,6 @@
-# food-recipes
+# Food Recipe API
 
-A simple food recipes API built using Clean Atchitecture. This does not aim to be a complete sollution, but a guide/ refference point for a pragmatic approach using Domain Driven Design and Clean Architecture.
-
-The following will not be included in this sollution: Authentication/ Users, Data Access.
+This demo focuses on applying Domain Driven Design and Clean Architecture principles. It uses in-memory data and skips real data access and authentication/authorization features because it’s intended as a portfolio example rather than a production-ready system. It’s a practical reference for understanding how to build a well-structured and maintainable API.
 
 # Domain Model Documentation
 
