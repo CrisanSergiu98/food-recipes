@@ -5,7 +5,7 @@ namespace FoodRecipes.Domain.ValueObjects;
 
 public sealed class IngredientDescription : ValueObject
 {
-    private const int MaxLength = 100;
+    private const int MaxLength = 200;
 
     private IngredientDescription(string value)
     {

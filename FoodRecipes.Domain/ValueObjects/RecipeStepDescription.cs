@@ -3,9 +3,9 @@ using FoodRecipes.Domain.Shared;
 
 namespace FoodRecipes.Domain.ValueObjects;
 
-public sealed class RecipeStepDescription: ValueObject
+public sealed class RecipeStepDescription : ValueObject
 {
-    private const int MaxLength = 100;
+    private const int MaxLength = 300;
 
     private RecipeStepDescription(string value)
     {

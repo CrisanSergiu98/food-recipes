@@ -2,12 +2,12 @@
 using FoodRecipes.Domain.Shared;
 using FoodRecipes.Domain.ValueObjects;
 
-namespace FoodRecipes.Domain.Aggregates.Recipe
+namespace FoodRecipes.Domain.Aggregates.Recipe.ValueObjects
 {
-    public sealed class RecipeStep : ValueObject
+    internal sealed class RecipeStep : ValueObject
     {
         private RecipeStep(
-            int number, 
+            int number,
             RecipeStepDescription description)
         {
             Number = number;
@@ -18,17 +18,22 @@ namespace FoodRecipes.Domain.Aggregates.Recipe
         public RecipeStepDescription Description { get; private set; }
 
         public static Result<RecipeStep> Create(
-            int number, 
+            int number,
             RecipeStepDescription description)
-        {    
+        {
             //+++ Validate number and descriprion
-            return new RecipeStep(number, description);            
+            return new RecipeStep(number, description);
         }
 
         public override IEnumerable<object> GetAtomicValues()
         {
             yield return Number;
             yield return Description;
+        }
+
+        public void Reindex(int index)
+        {
+            Number = index;
         }
     }
 }

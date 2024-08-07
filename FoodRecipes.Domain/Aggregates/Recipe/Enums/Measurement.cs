@@ -1,4 +1,4 @@
-﻿namespace FoodRecipes.Domain.Aggregates.Recipe;
+﻿namespace FoodRecipes.Domain.Aggregates.Recipe.Enums;
 
 public enum Measurement
 {

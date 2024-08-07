@@ -2,13 +2,13 @@
 using FoodRecipes.Domain.Shared;
 using FoodRecipes.Domain.ValueObjects;
 
-namespace FoodRecipes.Domain.Aggregates;
+namespace FoodRecipes.Domain.Aggregates.Ingredient;
 
 public class Ingredient : AggregateRoot
 {
     private Ingredient(
-        Guid id, 
-        IngredientName ingredientName, 
+        Guid id,
+        IngredientName ingredientName,
         IngredientDescription ingredientDescription
         ) : base(id)
     {

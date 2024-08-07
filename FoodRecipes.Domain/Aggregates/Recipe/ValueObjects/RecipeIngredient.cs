@@ -1,9 +1,10 @@
-﻿using FoodRecipes.Domain.Primitives;
+﻿using FoodRecipes.Domain.Aggregates.Recipe.Enums;
+using FoodRecipes.Domain.Primitives;
 using FoodRecipes.Domain.Shared;
 
-namespace FoodRecipes.Domain.Aggregates.Recipe
+namespace FoodRecipes.Domain.Aggregates.Recipe.ValueObjects
 {
-    public sealed class RecipeIngredient : ValueObject
+    internal sealed class RecipeIngredient : ValueObject
     {
         private RecipeIngredient(
             Guid ingredientId,
@@ -24,11 +25,11 @@ namespace FoodRecipes.Domain.Aggregates.Recipe
             float quantity,
             Measurement measurement)
         {
-            //+++ Validate number and descriprion
+            //Add Validation
             return new RecipeIngredient(
                 ingredientId,
                 quantity,
-                measurement);             
+                measurement);
         }
 
         public override IEnumerable<object> GetAtomicValues()
