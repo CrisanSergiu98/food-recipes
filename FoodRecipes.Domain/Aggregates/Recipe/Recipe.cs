@@ -1,4 +1,5 @@
 ﻿using FoodRecipes.Domain.Aggregates.Recipe.DTOs;
+using FoodRecipes.Domain.Aggregates.Recipe.Enums;
 using FoodRecipes.Domain.Aggregates.Recipe.ValueObjects;
 using FoodRecipes.Domain.Errors;
 using FoodRecipes.Domain.Primitives;
@@ -25,7 +26,12 @@ public sealed class Recipe : AggregateRoot
 
         foreach (var ingredient in ingredients)
         {
-            CreateRecipeIngredient(ingredient);
+            CreateRecipeIngredient(ingredient.IngredientId, ingredient.Quantity, ingredient.Measurement);
+        }
+
+        foreach(var step in steps)
+        {
+            CreateRecipeStep(step.StepNumber,step.Description);
         }
     }
 
@@ -49,12 +55,12 @@ public sealed class Recipe : AggregateRoot
         return Result.Success(recipe);
     }
 
-    public Result CreateRecipeIngredient(RecipeIngredientDto ingredient)
+    public Result CreateRecipeIngredient(Guid ingredientId, IngredientQuantity quanity, Measurement measurement)
     {
         var ingredientResponse = RecipeIngredient.Create(
-            ingredient.IngredientId, 
-            ingredient.Quantity, 
-            ingredient.Measurement);
+            ingredientId,
+            quanity,
+            measurement);
 
         if (ingredientResponse.IsFailure)
         {
@@ -80,9 +86,9 @@ public sealed class Recipe : AggregateRoot
         return Result.Success();
     }
 
-    public Result CreateRecipeStep(RecipeStepDto step)
+    public Result CreateRecipeStep(StepNumber number, StepDescription description)
     {
-        var stepResponse = RecipeStep.Create(step.StepNumber, step.Description);
+        var stepResponse = RecipeStep.Create(number, description);
 
         if (stepResponse.IsFailure)
         {
@@ -94,7 +100,7 @@ public sealed class Recipe : AggregateRoot
         return Result.Success();
     }
 
-    public Result RemoveStep(int number) 
+    public Result RemoveStep(StepNumber number) 
     {
         var step = _recipeSteps.FirstOrDefault(i => i.Number == number);
 

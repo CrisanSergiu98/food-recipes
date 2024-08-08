@@ -3,5 +3,5 @@
 namespace FoodRecipes.Domain.Aggregates.Recipe.DTOs;
 
 public record RecipeStepDto(
-    int StepNumber,
-    RecipeStepDescription Description);
+    StepNumber StepNumber,
+    StepDescription Description);

@@ -12,7 +12,7 @@ public sealed class IngredientDescription : ValueObject
         Value = value;
     }
 
-    public string Value { get; set; }
+    public string Value { get; private set; }
 
     public static Result<IngredientDescription> Create(string value)
     {

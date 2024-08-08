@@ -1,6 +1,7 @@
 ﻿using FoodRecipes.Domain.Aggregates.Recipe.Enums;
 using FoodRecipes.Domain.Primitives;
 using FoodRecipes.Domain.Shared;
+using FoodRecipes.Domain.ValueObjects;
 
 namespace FoodRecipes.Domain.Aggregates.Recipe.ValueObjects
 {
@@ -8,7 +9,7 @@ namespace FoodRecipes.Domain.Aggregates.Recipe.ValueObjects
     {
         private RecipeIngredient(
             Guid ingredientId,
-            float quantity,
+            IngredientQuantity quantity,
             Measurement measurement)
         {
             IngredientId = ingredientId;
@@ -17,15 +18,16 @@ namespace FoodRecipes.Domain.Aggregates.Recipe.ValueObjects
         }
 
         public Guid IngredientId { get; private set; }
-        public float Quantity { get; private set; }
+        public IngredientQuantity Quantity { get; private set; }
         public Measurement Measurement { get; private set; }
 
         public static Result<RecipeIngredient> Create(
             Guid ingredientId,
-            float quantity,
+            IngredientQuantity quantity,
             Measurement measurement)
         {
             //Add Validation
+
             return new RecipeIngredient(
                 ingredientId,
                 quantity,

@@ -7,21 +7,20 @@ namespace FoodRecipes.Domain.Aggregates.Recipe.ValueObjects
     internal sealed class RecipeStep : ValueObject
     {
         private RecipeStep(
-            int number,
-            RecipeStepDescription description)
+            StepNumber number,
+            StepDescription description)
         {
             Number = number;
             Description = description;
         }
 
-        public int Number { get; private set; }
-        public RecipeStepDescription Description { get; private set; }
+        public StepNumber Number { get; private set; }
+        public StepDescription Description { get; private set; }
 
         public static Result<RecipeStep> Create(
-            int number,
-            RecipeStepDescription description)
+            StepNumber number,
+            StepDescription description)
         {
-            //+++ Validate number and descriprion
             return new RecipeStep(number, description);
         }
 
@@ -29,11 +28,6 @@ namespace FoodRecipes.Domain.Aggregates.Recipe.ValueObjects
         {
             yield return Number;
             yield return Description;
-        }
-
-        public void Reindex(int index)
-        {
-            Number = index;
-        }
+        }        
     }
 }
