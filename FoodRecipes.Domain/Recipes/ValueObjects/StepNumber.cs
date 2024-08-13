@@ -1,7 +1,7 @@
 ﻿using FoodRecipes.Domain.Primitives;
 using FoodRecipes.Domain.Shared;
 
-namespace FoodRecipes.Domain.ValueObjects;
+namespace FoodRecipes.Domain.Recipes.ValueObjects;
 
 public sealed class StepNumber : ValueObject
 {
@@ -11,8 +11,6 @@ public sealed class StepNumber : ValueObject
     }
     public static Result<StepNumber> Create(int value)
     {
-        //Add Validation
-
         return Result.Success(new StepNumber(value));
     }
     public int Value { get; private set; }

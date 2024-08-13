@@ -1,8 +1,7 @@
 ﻿using FoodRecipes.Domain.Primitives;
 using FoodRecipes.Domain.Shared;
-using FoodRecipes.Domain.ValueObjects;
 
-namespace FoodRecipes.Domain.Aggregates.Recipe.ValueObjects
+namespace FoodRecipes.Domain.Recipes.ValueObjects
 {
     internal sealed class RecipeStep : ValueObject
     {
@@ -28,6 +27,6 @@ namespace FoodRecipes.Domain.Aggregates.Recipe.ValueObjects
         {
             yield return Number;
             yield return Description;
-        }        
+        }
     }
 }

@@ -1,16 +1,16 @@
-﻿using FoodRecipes.Domain.Aggregates.Recipe.Enums;
+﻿using FoodRecipes.Domain.Aggregates.Recipes.Enums;
+using FoodRecipes.Domain.Common.ValueObjects;
 using FoodRecipes.Domain.Primitives;
 using FoodRecipes.Domain.Shared;
-using FoodRecipes.Domain.ValueObjects;
 
-namespace FoodRecipes.Domain.Aggregates.Recipe.ValueObjects
+namespace FoodRecipes.Domain.Recipes.ValueObjects
 {
     internal sealed class RecipeIngredient : ValueObject
     {
         private RecipeIngredient(
             Guid ingredientId,
             IngredientQuantity quantity,
-            Measurement measurement)
+            Unit measurement)
         {
             IngredientId = ingredientId;
             Quantity = quantity;
@@ -19,18 +19,23 @@ namespace FoodRecipes.Domain.Aggregates.Recipe.ValueObjects
 
         public Guid IngredientId { get; private set; }
         public IngredientQuantity Quantity { get; private set; }
-        public Measurement Measurement { get; private set; }
+        public Unit Measurement { get; private set; }
 
         public static Result<RecipeIngredient> Create(
             Guid ingredientId,
-            IngredientQuantity quantity,
-            Measurement measurement)
+            float quantity,
+            Unit measurement)
         {
-            //Add Validation
+            var quantityResult = IngredientQuantity.Craete(quantity);
+
+            if (quantityResult.IsFailure)
+            {
+                return Result.Failure<RecipeIngredient>(quantityResult.Error);
+            }
 
             return new RecipeIngredient(
                 ingredientId,
-                quantity,
+                quantityResult.Value,
                 measurement);
         }
 

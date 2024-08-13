@@ -1,7 +1,8 @@
-﻿using FoodRecipes.Domain.Primitives;
+﻿using FoodRecipes.Domain.Errors;
+using FoodRecipes.Domain.Primitives;
 using FoodRecipes.Domain.Shared;
 
-namespace FoodRecipes.Domain.ValueObjects
+namespace FoodRecipes.Domain.Ingredients
 {
     public sealed class IngredientName : ValueObject
     {
@@ -18,16 +19,12 @@ namespace FoodRecipes.Domain.ValueObjects
         {
             if (string.IsNullOrWhiteSpace(value))
             {
-                return Result.Failure<IngredientName>(new Error(
-                    "Error.IngredientName.Empty",
-                    "The name is empty"));
+                return Result.Failure<IngredientName>(IngredientErrors.NameIsEmpty);
             }
 
             if (value.Length > MaxLength)
             {
-                return Result.Failure<IngredientName>(new Error(
-                    "Error.IngredientName.MaxLengthExceeded",
-                    $"The name has more than {MaxLength} characters"));
+                return Result.Failure<IngredientName>(IngredientErrors.NameMaxLengthExceeded);
             }
 
             return new IngredientName(value);
@@ -37,5 +34,7 @@ namespace FoodRecipes.Domain.ValueObjects
         {
             yield return Value;
         }
+
+        public static int GetMaxLength() => MaxLength;
     }
 }

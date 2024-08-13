@@ -1,7 +1,8 @@
-﻿using FoodRecipes.Domain.Primitives;
+﻿using FoodRecipes.Domain.Errors;
+using FoodRecipes.Domain.Primitives;
 using FoodRecipes.Domain.Shared;
 
-namespace FoodRecipes.Domain.ValueObjects;
+namespace FoodRecipes.Domain.Recipes.ValueObjects;
 
 public sealed class StepDescription : ValueObject
 {
@@ -18,16 +19,12 @@ public sealed class StepDescription : ValueObject
     {
         if (string.IsNullOrWhiteSpace(value))
         {
-            return Result.Failure<StepDescription>(new Error(
-                "Error.RecipeStepDescription.Empty",
-                "The description is empty"));
+            return Result.Failure<StepDescription>(RecipeErrors.StepDescriptionIsEmpty);
         }
 
         if (value.Length > MaxLength)
         {
-            return Result.Failure<StepDescription>(new Error(
-                "Error.RecipeStepDescription.MaxLengthExceeded",
-                $"The description has more than {MaxLength} characters"));
+            return Result.Failure<StepDescription>(RecipeErrors.StepDescriptionMaxLengthExceeded);
         }
 
         return new StepDescription(value);
@@ -37,4 +34,6 @@ public sealed class StepDescription : ValueObject
     {
         yield return Value;
     }
+
+    public static int GetMaxLength() => MaxLength;
 }

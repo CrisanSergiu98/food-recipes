@@ -1,14 +1,14 @@
-﻿using FoodRecipes.Domain.Aggregates.Recipe.DTOs;
-using FoodRecipes.Domain.Aggregates.Recipe.Enums;
-using FoodRecipes.Domain.Aggregates.Recipe.ValueObjects;
-using FoodRecipes.Domain.Errors;
+﻿using FoodRecipes.Domain.Errors;
 using FoodRecipes.Domain.Primitives;
 using FoodRecipes.Domain.Shared;
-using FoodRecipes.Domain.ValueObjects;
+using FoodRecipes.Domain.Aggregates.Recipes.Enums;
+using FoodRecipes.Domain.Common.ValueObjects;
+using FoodRecipes.Domain.Recipes.DTOs;
+using FoodRecipes.Domain.Recipes.ValueObjects;
 
-namespace FoodRecipes.Domain.Aggregates.Recipe;
+namespace FoodRecipes.Domain.Recipes;
 
-public sealed class Recipe : AggregateRoot
+public class Recipe : AggregateRoot
 {
     private readonly HashSet<RecipeIngredient> _recipeIngredients = new();
     private readonly HashSet<RecipeStep> _recipeSteps = new();
@@ -29,9 +29,9 @@ public sealed class Recipe : AggregateRoot
             CreateRecipeIngredient(ingredient.IngredientId, ingredient.Quantity, ingredient.Measurement);
         }
 
-        foreach(var step in steps)
+        foreach (var step in steps)
         {
-            CreateRecipeStep(step.StepNumber,step.Description);
+            CreateRecipeStep(step.StepNumber, step.Description);
         }
     }
 
@@ -55,7 +55,7 @@ public sealed class Recipe : AggregateRoot
         return Result.Success(recipe);
     }
 
-    public Result CreateRecipeIngredient(Guid ingredientId, IngredientQuantity quanity, Measurement measurement)
+    public Result CreateRecipeIngredient(Guid ingredientId, float quanity, Unit measurement)
     {
         var ingredientResponse = RecipeIngredient.Create(
             ingredientId,
@@ -100,11 +100,11 @@ public sealed class Recipe : AggregateRoot
         return Result.Success();
     }
 
-    public Result RemoveStep(StepNumber number) 
+    public Result RemoveStep(StepNumber number)
     {
         var step = _recipeSteps.FirstOrDefault(i => i.Number == number);
 
-        if (step == null) 
+        if (step == null)
         {
             return Result.Failure(RecipeErrors.StepNotFound);
         }

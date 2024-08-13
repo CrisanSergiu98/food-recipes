@@ -1,6 +1,4 @@
-﻿using FoodRecipes.Domain.Shared;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using MediatR;
 
 namespace FoodRecipes.Application.Abstractions.Messaging
 {
@@ -10,7 +8,7 @@ namespace FoodRecipes.Application.Abstractions.Messaging
     /// </summary>
     /// <typeparam name="TQuery">The type of query to be handled. Must implement <see cref="IQuery{TResponse}"/>.</typeparam>
     /// <typeparam name="TResponse">The type of response returned by the query handler.</typeparam>
-    public interface IQueryHandler<in TQuery, TResponse>
+    public interface IQueryHandler<in TQuery, TResponse>: IRequestHandler<TQuery, TResponse>
         where TQuery : IQuery<TResponse>
     {
         /// <summary>
@@ -19,6 +17,7 @@ namespace FoodRecipes.Application.Abstractions.Messaging
         /// <param name="query">The query to handle.</param>
         /// <param name="cancellationToken">A token to monitor for cancellation requests.</param>
         /// <returns>A task that represents the asynchronous operation. The task result contains a <see cref="Result{TResponse}"/> indicating the outcome of the query handling along with the response.</returns>
-        Task<Result<TResponse>> Handle(TQuery query, CancellationToken cancellationToken);
+        
+        //Task<Result<TResponse>> Handle(TQuery query, CancellationToken cancellationToken);
     }
 }

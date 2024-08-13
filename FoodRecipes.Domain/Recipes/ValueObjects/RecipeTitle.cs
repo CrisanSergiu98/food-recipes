@@ -1,11 +1,12 @@
-﻿using FoodRecipes.Domain.Primitives;
+﻿using FoodRecipes.Domain.Errors;
+using FoodRecipes.Domain.Primitives;
 using FoodRecipes.Domain.Shared;
 
-namespace FoodRecipes.Domain.ValueObjects;
+namespace FoodRecipes.Domain.Recipes.ValueObjects;
 
 public sealed class RecipeTitle : ValueObject
 {
-    private const int MaxLength = 100;
+    private static int MaxLength = 100;
 
     private RecipeTitle(string value)
     {
@@ -18,20 +19,18 @@ public sealed class RecipeTitle : ValueObject
     {
         if (string.IsNullOrWhiteSpace(value))
         {
-            return Result.Failure<RecipeTitle>(new Error(
-                "Error.RecipeTitle.Empty",
-                "The title is empty"));
+            return Result.Failure<RecipeTitle>(RecipeErrors.RecipeTitleIsEmpty);
         }
 
         if (value.Length > MaxLength)
         {
-            return Result.Failure<RecipeTitle>(new Error(
-                "Error.RecipeTitle.MaxLengthExceeded",
-                $"The title has more than {MaxLength} characters"));
+            return Result.Failure<RecipeTitle>(RecipeErrors.RecipeTitleMaxLengthExceeded);
         }
 
         return new RecipeTitle(value);
     }
+
+    public static int GetMaxLength() => MaxLength;
 
     public override IEnumerable<object> GetAtomicValues()
     {

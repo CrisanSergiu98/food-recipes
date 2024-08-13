@@ -1,8 +1,7 @@
 ﻿using FoodRecipes.Domain.Primitives;
 using FoodRecipes.Domain.Shared;
-using FoodRecipes.Domain.ValueObjects;
 
-namespace FoodRecipes.Domain.Aggregates.Ingredient;
+namespace FoodRecipes.Domain.Ingredients;
 
 public class Ingredient : AggregateRoot
 {
