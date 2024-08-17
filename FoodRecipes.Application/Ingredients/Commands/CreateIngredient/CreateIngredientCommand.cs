@@ -3,7 +3,7 @@ using FoodRecipes.Domain.Shared;
 
 namespace FoodRecipes.Application.Ingredients.Commands.CreateIngredient;
 
-public record CreateIngreduebtCommand(
+public record CreateIngredientCommand(
     string Name,
     string Description
     ):ICommand<Result>;

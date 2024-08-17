@@ -1,4 +1,4 @@
-﻿using FoodRecipes.Domain.Ingredients;
+﻿using FoodRecipes.Domain.Ingredients.ValueObjects;
 using FoodRecipes.Domain.Shared;
 
 namespace FoodRecipes.Domain.Errors;
@@ -23,4 +23,8 @@ public static class IngredientErrors
     public static Error DescriptionIsEmpty = new Error(
         "Error.Ingredient.DescriptionIsEmpty",
         "The description cannot be empty");
+
+    public static Error NotFound = new Error(
+        "Error.Ingredient",
+        "This ingredient cannot be found");
 }

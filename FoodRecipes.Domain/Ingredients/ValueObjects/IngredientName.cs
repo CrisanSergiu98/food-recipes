@@ -2,7 +2,7 @@
 using FoodRecipes.Domain.Primitives;
 using FoodRecipes.Domain.Shared;
 
-namespace FoodRecipes.Domain.Ingredients
+namespace FoodRecipes.Domain.Ingredients.ValueObjects
 {
     public sealed class IngredientName : ValueObject
     {

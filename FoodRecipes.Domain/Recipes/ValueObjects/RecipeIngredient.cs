@@ -1,30 +1,29 @@
-﻿using FoodRecipes.Domain.Aggregates.Recipes.Enums;
-using FoodRecipes.Domain.Common.ValueObjects;
+﻿using FoodRecipes.Domain.Common.ValueObjects;
 using FoodRecipes.Domain.Primitives;
 using FoodRecipes.Domain.Shared;
 
 namespace FoodRecipes.Domain.Recipes.ValueObjects
 {
-    internal sealed class RecipeIngredient : ValueObject
+    public sealed class RecipeIngredient : ValueObject
     {
         private RecipeIngredient(
             Guid ingredientId,
             IngredientQuantity quantity,
-            Unit measurement)
+            Unit unit)
         {
             IngredientId = ingredientId;
             Quantity = quantity;
-            Measurement = measurement;
+            Unit = unit;
         }
 
         public Guid IngredientId { get; private set; }
         public IngredientQuantity Quantity { get; private set; }
-        public Unit Measurement { get; private set; }
+        public Unit Unit { get; private set; }
 
         public static Result<RecipeIngredient> Create(
             Guid ingredientId,
             float quantity,
-            Unit measurement)
+            Unit unit)
         {
             var quantityResult = IngredientQuantity.Craete(quantity);
 
@@ -36,14 +35,14 @@ namespace FoodRecipes.Domain.Recipes.ValueObjects
             return new RecipeIngredient(
                 ingredientId,
                 quantityResult.Value,
-                measurement);
+                unit);
         }
 
         public override IEnumerable<object> GetAtomicValues()
         {
             yield return IngredientId;
             yield return Quantity;
-            yield return Measurement;
+            yield return Unit;
         }
     }
 }

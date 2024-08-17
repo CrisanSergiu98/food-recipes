@@ -3,7 +3,7 @@ using FoodRecipes.Domain.Shared;
 
 namespace FoodRecipes.Domain.Recipes.ValueObjects
 {
-    internal sealed class RecipeStep : ValueObject
+    public sealed class RecipeStep : ValueObject
     {
         private RecipeStep(
             StepNumber number,

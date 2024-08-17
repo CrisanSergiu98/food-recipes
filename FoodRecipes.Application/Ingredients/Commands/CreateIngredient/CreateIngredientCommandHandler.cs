@@ -1,11 +1,18 @@
 ﻿using FoodRecipes.Application.Abstractions.Messaging;
+using FoodRecipes.Application.Abstractions.Repositories;
 using FoodRecipes.Domain.Ingredients;
+using FoodRecipes.Domain.Ingredients.ValueObjects;
 using FoodRecipes.Domain.Shared;
 
 namespace FoodRecipes.Application.Ingredients.Commands.CreateIngredient;
-internal class CreateIngredientCommandHandler : ICommandHandler<CreateIngreduebtCommand, Result>
+internal class CreateIngredientCommandHandler : ICommandHandler<CreateIngredientCommand, Result>
 {
-    public async Task<Result> Handle(CreateIngreduebtCommand request, CancellationToken cancellationToken)
+    private readonly IIngredientRepository _ingredientRepository;
+    public CreateIngredientCommandHandler(IIngredientRepository ingredientRepository)
+    {
+        _ingredientRepository = ingredientRepository;
+    }
+    public async Task<Result> Handle(CreateIngredientCommand request, CancellationToken cancellationToken)
     {
         var name = IngredientName.Create(request.Name);
 
@@ -22,6 +29,8 @@ internal class CreateIngredientCommandHandler : ICommandHandler<CreateIngreduebt
             name.Value,
             description.Value);
 
-        return Result.Success(ingredient);
+        _ingredientRepository.Insert(ingredient.Value);
+
+        return Result.Success(ingredient.Value);
     }
 }

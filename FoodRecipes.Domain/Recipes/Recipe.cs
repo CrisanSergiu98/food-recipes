@@ -1,9 +1,6 @@
 ﻿using FoodRecipes.Domain.Errors;
 using FoodRecipes.Domain.Primitives;
 using FoodRecipes.Domain.Shared;
-using FoodRecipes.Domain.Aggregates.Recipes.Enums;
-using FoodRecipes.Domain.Common.ValueObjects;
-using FoodRecipes.Domain.Recipes.DTOs;
 using FoodRecipes.Domain.Recipes.ValueObjects;
 
 namespace FoodRecipes.Domain.Recipes;
@@ -17,8 +14,8 @@ public class Recipe : AggregateRoot
         Guid id,
         RecipeTitle title,
         RecipeDescription description,
-        HashSet<RecipeIngredientDto> ingredients,
-        HashSet<RecipeStepDto> steps
+        HashSet<RecipeIngredient> ingredients,
+        HashSet<RecipeStep> steps
         ) : base(id)
     {
         Title = title;
@@ -26,12 +23,12 @@ public class Recipe : AggregateRoot
 
         foreach (var ingredient in ingredients)
         {
-            CreateRecipeIngredient(ingredient.IngredientId, ingredient.Quantity, ingredient.Measurement);
+            CreateRecipeIngredient(ingredient);
         }
 
         foreach (var step in steps)
         {
-            CreateRecipeStep(step.StepNumber, step.Description);
+            CreateRecipeStep(step);
         }
     }
 
@@ -42,8 +39,8 @@ public class Recipe : AggregateRoot
         Guid id,
         RecipeTitle title,
         RecipeDescription description,
-        HashSet<RecipeIngredientDto> ingredients,
-        HashSet<RecipeStepDto> steps)
+        HashSet<RecipeIngredient> ingredients,
+        HashSet<RecipeStep> steps)
     {
         var recipe = new Recipe(
             id,
@@ -55,19 +52,9 @@ public class Recipe : AggregateRoot
         return Result.Success(recipe);
     }
 
-    public Result CreateRecipeIngredient(Guid ingredientId, float quanity, Unit measurement)
+    public Result CreateRecipeIngredient(RecipeIngredient ingredientToAdd)
     {
-        var ingredientResponse = RecipeIngredient.Create(
-            ingredientId,
-            quanity,
-            measurement);
-
-        if (ingredientResponse.IsFailure)
-        {
-            return Result.Failure(ingredientResponse.Error);
-        }
-
-        _recipeIngredients.Add(ingredientResponse.Value);
+        _recipeIngredients.Add(ingredientToAdd);
 
         return Result.Success();
     }
@@ -86,16 +73,9 @@ public class Recipe : AggregateRoot
         return Result.Success();
     }
 
-    public Result CreateRecipeStep(StepNumber number, StepDescription description)
-    {
-        var stepResponse = RecipeStep.Create(number, description);
-
-        if (stepResponse.IsFailure)
-        {
-            return Result.Failure(stepResponse.Error);
-        }
-
-        _recipeSteps.Add(stepResponse.Value);
+    public Result CreateRecipeStep(RecipeStep stepToAdd)
+    {       
+        _recipeSteps.Add(stepToAdd);
 
         return Result.Success();
     }

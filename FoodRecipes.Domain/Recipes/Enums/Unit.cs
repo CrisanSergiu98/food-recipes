@@ -1,6 +1,6 @@
 ﻿namespace FoodRecipes.Domain.Recipes.Enums;
 
-public enum Measurement
+public enum Unit
 {
     Teaspoon,
     Tablespoon,

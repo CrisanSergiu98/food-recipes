@@ -7,16 +7,16 @@ namespace FoodRecipes.Domain.Common.ValueObjects;
 
 public class Unit : ValueObject
 {
-    private Unit(Measurement value)
+    private Unit(Recipes.Enums.Unit value)
     {
         Value = value;
     }
-    public Measurement Value { get; private set; }
+    public Recipes.Enums.Unit Value { get; private set; }
     public static Result<Unit> Create(string unit)
     {
-        if (Enum.TryParse(typeof(Measurement), unit, out var measurementValue))
+        if (Enum.TryParse(typeof(Recipes.Enums.Unit), unit, out var measurementValue))
         {
-            return Result.Success(new Unit((Measurement)measurementValue));
+            return Result.Success(new Unit((Recipes.Enums.Unit)measurementValue));
         }
         else
         {
