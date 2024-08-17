@@ -59,6 +59,31 @@ public class Recipe : AggregateRoot
         return Result.Success();
     }
 
+    public Result UpdateRecipe(
+        RecipeTitle title,
+        RecipeDescription description,
+        HashSet<RecipeIngredient> ingredients,
+        HashSet<RecipeStep> steps)
+    {
+        Title = title;
+        Description = description;
+
+        _recipeIngredients.Clear();
+        _recipeSteps.Clear();
+
+        foreach (var ingredient in ingredients)
+        {
+            CreateRecipeIngredient(ingredient);
+        }
+
+        foreach (var step in steps)
+        {
+            CreateRecipeStep(step);
+        }
+
+        return Result.Success();
+    }
+
     public Result RemoveIngredient(Guid ingredientId)
     {
         var ingredient = _recipeIngredients.FirstOrDefault(i => i.IngredientId == ingredientId);

@@ -2,20 +2,20 @@
 using FoodRecipes.Application.Ingredients.Commands.DeleteIngredient;
 using FoodRecipes.Application.Ingredients.Commands.UpdateIngredient;
 using FoodRecipes.Presentation.Abstractions;
-using FoodRecipes.Presentation.Contracts;
+using FoodRecipes.Presentation.Contracts.Ingredients;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoodRecipes.Presentation.Controllers;
 
-[Route("api/Ingredient")]
+[Route("api/ingredient")]
 public class IngredientController: ApiController
 {
     protected IngredientController(ISender sender) : base(sender)
     {
     }
 
-    [HttpPost("Create")]
+    [HttpPost("create")]
     public async Task<IActionResult> CreateIngredient(IngredientCreationRequest request)
     {
         var command = new CreateIngredientCommand(
@@ -27,7 +27,7 @@ public class IngredientController: ApiController
         return result.IsSuccess? Ok(result): BadRequest(result.Error);
     }
 
-    [HttpPost("Update")]
+    [HttpPost("update")]
     public async Task<IActionResult> UpdateIngredient(IngredientUpdateRequest request)
     {
         var command = new UpdateIngredientCommand(
@@ -40,7 +40,7 @@ public class IngredientController: ApiController
         return result.IsSuccess ? Ok(result) : BadRequest(result.Error);
     }
 
-    [HttpPost("Delete")]
+    [HttpPost("delete")]
     public async Task<IActionResult> DeleteIngredient(IngredientDeletionRequest request)
     {
         var command = new DeleteIngredientCommand(request.Id);
