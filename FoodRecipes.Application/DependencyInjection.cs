@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using FoodRecipes.Application.Abstractions.Repositories;
+using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
 namespace FoodRecipes.Application;
