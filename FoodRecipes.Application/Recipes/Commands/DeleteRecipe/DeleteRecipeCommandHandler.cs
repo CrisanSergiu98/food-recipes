@@ -4,7 +4,7 @@ using FoodRecipes.Domain.Shared;
 
 namespace FoodRecipes.Application.Recipes.Commands.DeleteRecipe;
 
-internal class DeleteRecipeCommandHandler : ICommandHandler<DeleteRecipeCommand, Result>
+internal sealed class DeleteRecipeCommandHandler : ICommandHandler<DeleteRecipeCommand, Result>
 {
     private readonly IRecipeRepository _recipeRepository;
 

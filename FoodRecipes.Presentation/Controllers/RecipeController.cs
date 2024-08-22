@@ -10,7 +10,7 @@ namespace FoodRecipes.Presentation.Controllers;
 [Route("api/recipe")]
 public class RecipeController : ApiController
 {
-    protected RecipeController(ISender sender) : base(sender)
+    public RecipeController(ISender sender) : base(sender)
     {
     }
     [HttpPost("create")]
@@ -39,6 +39,8 @@ public class RecipeController : ApiController
 
         return result.IsSuccess ? Ok(result) : BadRequest(result.Error);
     }
+
+    [HttpPost("delete")]
     public async Task<IActionResult> DeleteRecipe(RecipeDeleteRequest request)
     {
         var command = new DeleteRecipeCommand(request.Id);

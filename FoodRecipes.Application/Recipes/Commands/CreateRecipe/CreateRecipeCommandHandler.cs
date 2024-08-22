@@ -6,7 +6,7 @@ using FoodRecipes.Domain.Shared;
 
 namespace FoodRecipes.Application.Recipes.Commands.CreateRecipe;
 
-internal class CreateRecipeCommandHandler : ICommandHandler<CreateRecipeCommand, Result>
+internal sealed class CreateRecipeCommandHandler : ICommandHandler<CreateRecipeCommand, Result>
 {
     public async Task<Result> Handle(CreateRecipeCommand request, CancellationToken cancellationToken)
     {

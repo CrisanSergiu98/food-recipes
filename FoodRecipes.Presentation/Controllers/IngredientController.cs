@@ -11,7 +11,7 @@ namespace FoodRecipes.Presentation.Controllers;
 [Route("api/ingredient")]
 public class IngredientController: ApiController
 {
-    protected IngredientController(ISender sender) : base(sender)
+    public IngredientController(ISender sender) : base(sender)
     {
     }
 

@@ -6,7 +6,7 @@ using FoodRecipes.Domain.Shared;
 
 namespace FoodRecipes.Application.Recipes.Commands.UpdateRecipe;
 
-internal class UpdateRecipeCommandHandler : ICommandHandler<UpdateRecipeCommand, Result>
+internal sealed class UpdateRecipeCommandHandler : ICommandHandler<UpdateRecipeCommand, Result>
 {
     private readonly IRecipeRepository _recipeRepository;
     public UpdateRecipeCommandHandler(IRecipeRepository recipeRepository)
