@@ -31,6 +31,6 @@ internal class CreateIngredientCommandHandler : ICommandHandler<CreateIngredient
 
         _ingredientRepository.Insert(ingredient.Value);
 
-        return Result.Success(ingredient.Value);
+        return Result.Success(ingredient.Value.Id);
     }
 }

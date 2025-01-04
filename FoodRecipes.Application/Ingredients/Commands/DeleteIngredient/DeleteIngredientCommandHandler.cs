@@ -1,5 +1,6 @@
 ﻿using FoodRecipes.Application.Abstractions.Messaging;
 using FoodRecipes.Application.Abstractions.Repositories;
+using FoodRecipes.Domain.Errors;
 using FoodRecipes.Domain.Shared;
 
 namespace FoodRecipes.Application.Ingredients.Commands.DeleteIngredient;
@@ -13,8 +14,13 @@ internal class DeleteIngredientCommandHandler : ICommandHandler<DeleteIngredient
     }
     public async Task<Result> Handle(DeleteIngredientCommand request, CancellationToken cancellationToken)
     {
-        var result = _ingredientRepository.Delete(request.Id);
+        var ingredient = _ingredientRepository.GetById(request.Id, cancellationToken);
 
-        return result;
+        if (ingredient == null)
+            return Result.Failure(IngredientErrors.NotFound);
+
+        _ingredientRepository.Delete(request.Id);
+
+        return Result.Success();
     }
 }

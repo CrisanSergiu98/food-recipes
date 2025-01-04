@@ -1,6 +1,7 @@
 using FoodRecipes.Application.Abstractions.Messaging;
 using FoodRecipes.Application.Abstractions.Repositories;
 using FoodRecipes.Application.Ingredients.Queries.GetIngredient;
+using FoodRecipes.Domain.Errors;
 using FoodRecipes.Domain.Ingredients;
 using FoodRecipes.Domain.Shared;
 
@@ -20,7 +21,7 @@ namespace FoodRecipes.Application.Ingredients.Queries.GetIngredient
             var ingredient = await _ingredientRepository.GetById(request.IngredientId, cancellationToken);
 
             if (ingredient == null)
-                return Result.Failure<Ingredient>(new Error("IngredientNotFound", "The ingredient was not found."));
+                return Result.Failure<Ingredient>(IngredientErrors.NotFound);
 
             return ingredient;
         }
