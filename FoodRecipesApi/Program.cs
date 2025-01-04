@@ -4,13 +4,14 @@ using FoodRecipes.Presentation;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
+// Adding Dependencies
 builder.Services.AddApplication();
 builder.Services.AddPersistence();
 
+//Adding the controllers from the presentation layer
 builder.Services.AddControllers().AddApplicationPart(PresentationAssemblyReference.Assembly);
 //builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -25,9 +26,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();

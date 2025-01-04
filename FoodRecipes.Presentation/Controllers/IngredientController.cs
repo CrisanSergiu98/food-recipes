@@ -1,6 +1,9 @@
 ﻿using FoodRecipes.Application.Ingredients.Commands.CreateIngredient;
 using FoodRecipes.Application.Ingredients.Commands.DeleteIngredient;
 using FoodRecipes.Application.Ingredients.Commands.UpdateIngredient;
+using FoodRecipes.Application.Ingredients.Queries.GetAllIngredients;
+using FoodRecipes.Application.Ingredients.Queries.GetIngredient;
+using FoodRecipes.Domain.Ingredients;
 using FoodRecipes.Presentation.Abstractions;
 using FoodRecipes.Presentation.Contracts.Ingredients;
 using MediatR;
@@ -13,6 +16,26 @@ public class IngredientController: ApiController
 {
     public IngredientController(ISender sender) : base(sender)
     {
+    }
+
+    [HttpPost("getById")]
+    public async Task<IActionResult> GetIngredientById(IngredinetGetByIdRequest request)
+    {
+        var query = new GetIngredientQuery(request.Id);
+
+        var result = await Sender.Send(query);
+
+        return result.IsSuccess? Ok(result.Value) : BadRequest(result.Error);
+    }
+
+    [HttpPost("getAll")]
+    public async Task<IActionResult> GetAllIngredients()
+    {
+        var query = new GetAllIngredientsQuery();
+
+        var result = await Sender.Send(query);
+
+        return result.IsSuccess? Ok(result) : BadRequest(result.Error);
     }
 
     [HttpPost("create")]

@@ -26,6 +26,11 @@ public class IngredientRepository: IIngredientRepository
             return Task.FromResult(ingredient);
         }
 
+        public Task<List<Ingredient>> GetAll(CancellationToken cancellationToken)
+        {
+            return Task.FromResult(_ingredients.ToList());
+        }
+
         public Result Insert(Ingredient ingredient)
         {
             if (_ingredients.Any(i => i.Id == ingredient.Id))

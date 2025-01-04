@@ -12,6 +12,7 @@ namespace FoodRecipes.Application.Abstractions.Repositories
     public interface IIngredientRepository: IRepository<Ingredient>
     {
         Task<Ingredient?> GetById(Guid id, CancellationToken cancellationToken);
+        Task<List<Ingredient>> GetAll(CancellationToken cancellationToken);
         Result Delete(Guid id);
         Result Insert(Ingredient ingredient);
         Result Update(Ingredient ingredient);
