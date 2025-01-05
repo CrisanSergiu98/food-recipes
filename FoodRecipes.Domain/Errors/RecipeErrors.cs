@@ -15,6 +15,14 @@ public static class RecipeErrors
         "Error.Recipe.RecipeIngredientNotFound",
         "This ingredient was not found");
 
+    public static readonly Error IngredientAlreadyExists = new Error(
+        "Error.Recipe.RecipeIngredientAlreadyExists",
+        "Ingredient already exists in this recipe");
+
+    public static readonly Error StepAlreadyExists = new Error(
+        "Error.Recipe.RecipeStepAlreadyExists",
+        "Step already exists in this recipe");
+
     public static readonly Error StepNotFound = new Error(
         "Error.Recipe.RecipeStepNotFound", 
         "This step was not found");

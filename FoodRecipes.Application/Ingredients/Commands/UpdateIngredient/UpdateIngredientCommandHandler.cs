@@ -22,7 +22,13 @@ internal class UpdateIngredientCommandHandler : ICommandHandler<UpdateIngredient
         if (ingredient == null)
             return Result.Failure(IngredientErrors.NotFound);
 
+        if (_ingredientRepository.NameExists(
+            request.Name, cancellationToken).Result && 
+            !(ingredient.Name.Value == request.Name))
+            return Result.Failure(IngredientErrors.NameAlreadyExists);
+
         var nameResult = IngredientName.Create(request.Name);
+
         var descriptionResult = IngredientDescription.Create(request.Description);
 
         var result = Result.FirstFailureOrSuccess(nameResult, descriptionResult);

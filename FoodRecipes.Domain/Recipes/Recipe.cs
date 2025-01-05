@@ -54,6 +54,9 @@ public class Recipe : AggregateRoot
 
     public Result CreateRecipeIngredient(RecipeIngredient ingredientToAdd)
     {
+        if(_recipeIngredients.Any(ingredient => ingredient.IngredientId == ingredientToAdd.IngredientId))
+            return Result.Failure(RecipeErrors.IngredientAlreadyExists);
+
         _recipeIngredients.Add(ingredientToAdd);
 
         return Result.Success();
@@ -99,7 +102,10 @@ public class Recipe : AggregateRoot
     }
 
     public Result CreateRecipeStep(RecipeStep stepToAdd)
-    {       
+    {
+        if (_recipeSteps.Any(step => step.Number == stepToAdd.Number))
+            return Result.Failure(RecipeErrors.StepAlreadyExists);
+
         _recipeSteps.Add(stepToAdd);
 
         return Result.Success();

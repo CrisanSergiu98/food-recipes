@@ -5,3 +5,4 @@ public record RecipeCreateRequest(
     string Description,
     HashSet<(Guid, float, string)> Ingredients,
     HashSet<(int, string)> Steps);
+

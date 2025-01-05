@@ -1,5 +1,6 @@
 ﻿using FoodRecipes.Application.Abstractions.Messaging;
 using FoodRecipes.Application.Abstractions.Repositories;
+using FoodRecipes.Domain.Errors;
 using FoodRecipes.Domain.Ingredients;
 using FoodRecipes.Domain.Ingredients.ValueObjects;
 using FoodRecipes.Domain.Shared;
@@ -14,6 +15,10 @@ internal class CreateIngredientCommandHandler : ICommandHandler<CreateIngredient
     }
     public async Task<Result> Handle(CreateIngredientCommand request, CancellationToken cancellationToken)
     {
+        var nameResult = _ingredientRepository.NameExists(request.Name, cancellationToken);
+        if (nameResult.Result)
+            return Result.Failure(IngredientErrors.NameAlreadyExists);
+
         var name = IngredientName.Create(request.Name);
 
         if(name.IsFailure)

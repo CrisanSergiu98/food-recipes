@@ -42,5 +42,10 @@ namespace FoodRecipes.Persistence.Repositories
                 _ingredients.Remove(ingredient);
             }
         }
+
+        public async Task<bool> NameExists(string name, CancellationToken cancellationToken)
+        {             
+            return await Task.FromResult(_ingredients.Any(ingredient => ingredient.Name.Value == name));
+        }
     }
 }

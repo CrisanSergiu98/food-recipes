@@ -27,4 +27,9 @@ public static class IngredientErrors
     public static Error NotFound = new Error(
         "Error.Ingredient",
         "This ingredient cannot be found");
+
+    public static Error NameAlreadyExists = new Error(
+        "Error.Ingredient",
+        "This ingredient name is already used");
+
 }
