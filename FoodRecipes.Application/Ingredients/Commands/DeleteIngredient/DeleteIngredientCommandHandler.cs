@@ -14,12 +14,12 @@ internal class DeleteIngredientCommandHandler : ICommandHandler<DeleteIngredient
     }
     public async Task<Result> Handle(DeleteIngredientCommand request, CancellationToken cancellationToken)
     {
-        var ingredient = _ingredientRepository.GetById(request.Id, cancellationToken);
+        var ingredient = await _ingredientRepository.GetById(request.Id, cancellationToken);
 
-        if (ingredient == null)
+        if((object)ingredient == null)
             return Result.Failure(IngredientErrors.NotFound);
 
-        _ingredientRepository.Delete(request.Id);
+        _ingredientRepository.Delete(ingredient);
 
         return Result.Success();
     }

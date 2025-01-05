@@ -34,13 +34,9 @@ namespace FoodRecipes.Persistence.Repositories
             }
         }
 
-        public void Delete(Guid id)
+        public void Delete(Ingredient ingredient)
         {
-            var ingredient = _ingredients.FirstOrDefault(i => i.Id == id);
-            if (ingredient != null)
-            {
-                _ingredients.Remove(ingredient);
-            }
+            _ingredients.Remove(ingredient);
         }
 
         public async Task<bool> NameExists(string name, CancellationToken cancellationToken)

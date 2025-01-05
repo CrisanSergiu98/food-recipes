@@ -15,7 +15,7 @@ public interface IIngredientRepository : IRepository<Ingredient>
     Task<bool> NameExists(string name, CancellationToken cancellationToken);
 
     // Delete an ingredient by its ID
-    void Delete(Guid id);
+    void Delete(Ingredient ingredient);
 
     // Insert a new ingredient
     void Insert(Ingredient ingredient);

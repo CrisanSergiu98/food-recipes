@@ -19,7 +19,7 @@ internal class UpdateIngredientCommandHandler : ICommandHandler<UpdateIngredient
     {
         var ingredient = await _ingredientRepository.GetById(request.Id, cancellationToken);
 
-        if (ingredient == null)
+        if ((object)ingredient == null)
             return Result.Failure(IngredientErrors.NotFound);
 
         if (_ingredientRepository.NameExists(

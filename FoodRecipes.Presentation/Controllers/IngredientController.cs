@@ -17,17 +17,17 @@ public class IngredientController: ApiController
     {
     }
 
-    [HttpPost("getById")]
-    public async Task<IActionResult> GetIngredientById(IngredinetGetByIdRequest request)
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetIngredientById(Guid id)
     {
-        var query = new GetIngredientQuery(request.Id);
+        var query = new GetIngredientQuery(id);
 
         var result = await Sender.Send(query);
 
         return result.IsSuccess? Ok(result.Value) : BadRequest(result.Error);
     }
 
-    [HttpPost("getAll")]
+    [HttpGet]
     public async Task<IActionResult> GetAllIngredients()
     {
         var query = new GetAllIngredientsQuery();
@@ -37,8 +37,8 @@ public class IngredientController: ApiController
         return result.IsSuccess? Ok(result) : BadRequest(result.Error);
     }
 
-    [HttpPost("create")]
-    public async Task<IActionResult> CreateIngredient(IngredientCreationRequest request)
+    [HttpPost]
+    public async Task<IActionResult> CreateIngredient([FromBody] IngredientCreationRequest request)
     {
         var command = new CreateIngredientCommand(
             request.Name,
@@ -49,8 +49,8 @@ public class IngredientController: ApiController
         return result.IsSuccess? Ok(result): BadRequest(result.Error);
     }
 
-    [HttpPost("update")]
-    public async Task<IActionResult> UpdateIngredient(IngredientUpdateRequest request)
+    [HttpPut]
+    public async Task<IActionResult> UpdateIngredient([FromBody] IngredientUpdateRequest request)
     {
         var command = new UpdateIngredientCommand(
             request.Id,
@@ -62,10 +62,10 @@ public class IngredientController: ApiController
         return result.IsSuccess ? Ok(result) : BadRequest(result.Error);
     }
 
-    [HttpPost("delete")]
-    public async Task<IActionResult> DeleteIngredient(IngredientDeletionRequest request)
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteIngredient(Guid id)
     {
-        var command = new DeleteIngredientCommand(request.Id);
+        var command = new DeleteIngredientCommand(id);
 
         var result = await Sender.Send(command);
 
