@@ -20,7 +20,7 @@ namespace FoodRecipes.Application.Ingredients.Queries.GetIngredient
         {
             var ingredient = await _ingredientRepository.GetById(request.IngredientId, cancellationToken);
 
-            if (ingredient == null)
+            if ((object)ingredient == null)
                 return Result.Failure<Ingredient>(IngredientErrors.NotFound);
 
             return ingredient;

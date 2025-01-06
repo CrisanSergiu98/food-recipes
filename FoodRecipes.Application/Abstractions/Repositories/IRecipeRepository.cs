@@ -1,6 +1,5 @@
 ﻿using FoodRecipes.Application.Abstractions.Data;
 using FoodRecipes.Domain.Recipes;
-using FoodRecipes.Domain.Shared;
 
 namespace FoodRecipes.Application.Abstractions.Repositories;
 
@@ -8,17 +7,19 @@ namespace FoodRecipes.Application.Abstractions.Repositories;
 public interface IRecipeRepository : IRepository<Recipe>
 {
     // Get a recipe by its ID
-    Result<Recipe?> GetById(Guid id, CancellationToken cancellationToken = default);
+    Task<Recipe?> GetById(Guid id, CancellationToken cancellationToken = default);
 
     // Get all recipes
-    Result<IEnumerable<Recipe>> GetAll(CancellationToken cancellationToken = default);
+    Task<List<Recipe>> GetAll(CancellationToken cancellationToken = default);
+    
+    Task<bool> TitleExists(string title, CancellationToken cancellationToken);
 
     // Update an existing recipe
-    Result Update(Recipe recipe);
+    void Update(Recipe recipe);
 
     // Delete a recipe by its ID
-    Result Delete(Guid id);
+    void Delete(Recipe recipe);
 
     // Insert a new recipe
-    Result Insert(Recipe recipe);
+    void Insert(Recipe recipe);
 }

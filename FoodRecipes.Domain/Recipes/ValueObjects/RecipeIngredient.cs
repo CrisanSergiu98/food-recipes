@@ -1,5 +1,6 @@
-﻿using FoodRecipes.Domain.Common.ValueObjects;
+﻿using FoodRecipes.Domain.Errors;
 using FoodRecipes.Domain.Primitives;
+using FoodRecipes.Domain.Recipes.Enums;
 using FoodRecipes.Domain.Shared;
 
 namespace FoodRecipes.Domain.Recipes.ValueObjects
@@ -23,19 +24,20 @@ namespace FoodRecipes.Domain.Recipes.ValueObjects
         public static Result<RecipeIngredient> Create(
             Guid ingredientId,
             float quantity,
-            Unit unit)
+            string unit)
         {
             var quantityResult = IngredientQuantity.Craete(quantity);
 
             if (quantityResult.IsFailure)
-            {
                 return Result.Failure<RecipeIngredient>(quantityResult.Error);
-            }
+
+            if (!Enum.TryParse<Unit>(unit, true, out var parsedUnit))            
+                return Result.Failure<RecipeIngredient>(RecipeErrors.UnitIsNotValid);
 
             return new RecipeIngredient(
-                ingredientId,
-                quantityResult.Value,
-                unit);
+            ingredientId,
+            quantityResult.Value,
+            parsedUnit);
         }
 
         public override IEnumerable<object> GetAtomicValues()

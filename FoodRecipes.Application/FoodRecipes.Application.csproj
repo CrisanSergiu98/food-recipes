@@ -12,10 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Recipes\Queries\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\FoodRecipes.Domain\FoodRecipes.Domain.csproj" />
   </ItemGroup>
 

@@ -13,27 +13,17 @@ public class Recipe : AggregateRoot
     private Recipe(
         Guid id,
         RecipeTitle title,
-        RecipeDescription description,
-        HashSet<RecipeIngredient> ingredients,
-        HashSet<RecipeStep> steps
+        RecipeDescription description
         ) : base(id)
     {
         Title = title;
-        Description = description;
-
-        foreach (var ingredient in ingredients)
-        {
-            CreateRecipeIngredient(ingredient);
-        }
-
-        foreach (var step in steps)
-        {
-            CreateRecipeStep(step);
-        }
+        Description = description;        
     }
 
     public RecipeTitle Title { get; private set; }
     public RecipeDescription Description { get; private set; }
+    public List<RecipeIngredient> Ingredients => _recipeIngredients.ToList();
+    public List<RecipeStep> Steps => _recipeSteps.ToList();
 
     public static Result<Recipe> CreateRecipe(
         Guid id,
@@ -45,9 +35,23 @@ public class Recipe : AggregateRoot
         var recipe = new Recipe(
             id,
             title,
-            description,
-            ingredients,
-            steps);
+            description);
+
+        foreach(var ingredient in ingredients)
+        {
+            var ingredientResult = recipe.CreateRecipeIngredient(ingredient);
+
+            if(ingredientResult.IsFailure)
+                return Result.Failure<Recipe>(ingredientResult.Error);
+        }
+
+        foreach(var step in steps)
+        {
+            var stepResult = recipe.CreateRecipeStep(step);
+
+            if(stepResult.IsFailure)
+                return Result.Failure<Recipe>(stepResult.Error);
+        }
 
         return Result.Success(recipe);
     }
@@ -76,52 +80,30 @@ public class Recipe : AggregateRoot
 
         foreach (var ingredient in ingredients)
         {
-            CreateRecipeIngredient(ingredient);
+            var ingredientResult = CreateRecipeIngredient(ingredient);
+
+            if (ingredientResult.IsFailure)
+                return Result.Failure(ingredientResult.Error);
         }
 
         foreach (var step in steps)
         {
-            CreateRecipeStep(step);
+            var stepResult = CreateRecipeStep(step);
+
+            if (stepResult.IsFailure)
+                return Result.Failure(stepResult.Error);
         }
 
         return Result.Success();
     }
-
-    public Result RemoveIngredient(Guid ingredientId)
-    {
-        var ingredient = _recipeIngredients.FirstOrDefault(i => i.IngredientId == ingredientId);
-
-        if (ingredient == null)
-        {
-            return Result.Failure(RecipeErrors.IngredientNotFound);
-        }
-
-        _recipeIngredients.Remove(ingredient);
-
-        return Result.Success();
-    }
-
+    
     public Result CreateRecipeStep(RecipeStep stepToAdd)
     {
-        if (_recipeSteps.Any(step => step.Number == stepToAdd.Number))
+        if (_recipeSteps.Any(step => step.Value == stepToAdd.Value))
             return Result.Failure(RecipeErrors.StepAlreadyExists);
 
         _recipeSteps.Add(stepToAdd);
 
         return Result.Success();
-    }
-
-    public Result RemoveStep(StepNumber number)
-    {
-        var step = _recipeSteps.FirstOrDefault(i => i.Number == number);
-
-        if (step == null)
-        {
-            return Result.Failure(RecipeErrors.StepNotFound);
-        }
-
-        _recipeSteps.Remove(step);
-
-        return Result.Success();
-    }
+    }    
 }

@@ -1,6 +1,7 @@
 ﻿using FoodRecipes.Application.Abstractions.Messaging;
 using FoodRecipes.Application.Abstractions.Repositories;
-using FoodRecipes.Domain.Common.ValueObjects;
+using FoodRecipes.Domain.Errors;
+using FoodRecipes.Domain.Ingredients;
 using FoodRecipes.Domain.Recipes.ValueObjects;
 using FoodRecipes.Domain.Shared;
 
@@ -9,6 +10,8 @@ namespace FoodRecipes.Application.Recipes.Commands.UpdateRecipe;
 internal sealed class UpdateRecipeCommandHandler : ICommandHandler<UpdateRecipeCommand, Result>
 {
     private readonly IRecipeRepository _recipeRepository;
+    private readonly IIngredientRepository _ingredientRepository;
+
     public UpdateRecipeCommandHandler(IRecipeRepository recipeRepository)
     {
         _recipeRepository = recipeRepository;
@@ -17,14 +20,14 @@ internal sealed class UpdateRecipeCommandHandler : ICommandHandler<UpdateRecipeC
     {
         var recipeResult = _recipeRepository.GetById(request.Id);
 
-        if (recipeResult.Value == null)
-            return Result.Failure(new Error("", ""));
+        if (recipeResult.Result is null)
+            return Result.Failure(RecipeErrors.RecipeNotFound);
         
 
         var recipeTitle = RecipeTitle.Create(request.Title);
         var recipeDescription = RecipeDescription.Create(request.Description);
 
-        var result = Result.FirstFailureOrSuccess(recipeTitle, recipeDescription, recipeResult);
+        var result = Result.FirstFailureOrSuccess(recipeTitle, recipeDescription);
 
         if(result.IsFailure) 
             return Result.Failure(result.Error);
@@ -34,47 +37,39 @@ internal sealed class UpdateRecipeCommandHandler : ICommandHandler<UpdateRecipeC
 
         foreach (var ingredient in request.Ingredients)
         {
-            Unit unit;
+            var ingredientIdResult = await _ingredientRepository.GetById(ingredient.IngredientId, cancellationToken);
 
-            try
-            {
-                unit = ParseEnum<Unit>(ingredient.Item3);
-            }
-            catch (ArgumentException)
-            {
-                return Result.Failure(new Error("", "The Unit is incorrect."));
-            }
+            if ((object)ingredientIdResult == null)
+                return Result.Failure(IngredientErrors.NotFound);
 
-            var ingredientResult = RecipeIngredient.Create(ingredient.Item1, ingredient.Item2, unit);
+            //Create the RecipeIngredient ValueObject
+            var ingredientResult = RecipeIngredient.Create(ingredient.IngredientId, ingredient.Quantity, ingredient.Unit);
 
             if (ingredientResult.IsFailure)
                 return Result.Failure(ingredientResult.Error);
-            
+
+            //Add the RecipeIngredient to the hashset
             ingredients.Add(ingredientResult.Value);
         }
 
-        foreach (var step in steps)
+        foreach (var step in request.Steps)
         {
-            var stepResult = RecipeStep.Create(step.Number, step.Description);
+            var stepResult = RecipeStep.Create(step);
 
             if (stepResult.IsFailure)
                 return Result.Failure(stepResult.Error);
-            
+
             steps.Add(stepResult.Value);
         }
 
-        var updateResult = recipeResult.Value.UpdateRecipe(
+        var updateResult = recipeResult.Result.UpdateRecipe(
             recipeTitle.Value,
             recipeDescription.Value,
             ingredients,
             steps);
 
-        _recipeRepository.Update(recipeResult.Value);
+        _recipeRepository.Update(recipeResult.Result);
 
         return Result.Success(updateResult);
-    }
-    private static T ParseEnum<T>(string value)
-    {
-        return (T)Enum.Parse(typeof(T), value, true);
     }
 }

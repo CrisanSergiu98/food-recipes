@@ -1,5 +1,6 @@
 ﻿using FoodRecipes.Application.Abstractions.Messaging;
 using FoodRecipes.Application.Abstractions.Repositories;
+using FoodRecipes.Domain.Errors;
 using FoodRecipes.Domain.Shared;
 
 namespace FoodRecipes.Application.Recipes.Commands.DeleteRecipe;
@@ -14,10 +15,12 @@ internal sealed class DeleteRecipeCommandHandler : ICommandHandler<DeleteRecipeC
     }
     public async Task<Result> Handle(DeleteRecipeCommand request, CancellationToken cancellationToken)
     {
-        var result = _recipeRepository.Delete(request.Id);
+        var recipeResult = await _recipeRepository.GetById(request.Id);
 
-        if(result.IsFailure)
-            return Result.Failure(result.Error);
+        if (recipeResult is null)
+            return Result.Failure(RecipeErrors.RecipeNotFound);
+
+        _recipeRepository.Delete(recipeResult);
 
         return Result.Success();
     }

@@ -1,6 +1,9 @@
 ﻿using FoodRecipes.Application.Recipes.Commands.CreateRecipe;
 using FoodRecipes.Application.Recipes.Commands.DeleteRecipe;
 using FoodRecipes.Application.Recipes.Commands.UpdateRecipe;
+using FoodRecipes.Application.Recipes.Dto;
+using FoodRecipes.Application.Recipes.Queries.GetAllRecipes;
+using FoodRecipes.Application.Recipes.Queries.GetRecipeById;
 using FoodRecipes.Presentation.Abstractions;
 using FoodRecipes.Presentation.Contracts.Recipes;
 using MediatR;
@@ -13,6 +16,26 @@ public class RecipeController : ApiController
     public RecipeController(ISender sender) : base(sender)
     {
     }
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(Guid id)
+    {
+        var query = new GetRecipeByIdQuery(id);
+
+        var result = await Sender.Send(query);
+
+        return result.IsSuccess? Ok(result.Value) : BadRequest(result.Error);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        var query = new GetAllRecipesQuery();
+
+        var result = await Sender.Send(query);
+
+        return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Error);
+    }
+
     [HttpPost("create")]
     public async Task<IActionResult> CreateRecipe(RecipeCreateRequest request)
     {
@@ -33,7 +56,8 @@ public class RecipeController : ApiController
             request.Id,
             request.Title,
             request.Description,
-            request.Ingredients,request.Steps);
+            request.Ingredients,
+            request.Steps);
 
         var result = await Sender.Send(command);
 

@@ -16,7 +16,7 @@ public class GetAllIngredientsQueryHandler : IQueryHandler<GetAllIngredientsQuer
     {
         var ingredients = _ingredientRepository.GetAll(cancellationToken);
 
-        if(ingredients == null)
+        if((object)ingredients == null)
             return Result.Failure(new Error("",""));
 
         return Result.Success(ingredients);
