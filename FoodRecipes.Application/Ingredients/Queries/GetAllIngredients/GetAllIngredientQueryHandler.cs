@@ -1,5 +1,6 @@
 using FoodRecipes.Application.Abstractions.Messaging;
 using FoodRecipes.Application.Abstractions.Repositories;
+using FoodRecipes.Domain.Errors;
 using FoodRecipes.Domain.Ingredients;
 using FoodRecipes.Domain.Shared;
 
@@ -15,12 +16,12 @@ public class GetAllIngredientsQueryHandler : IQueryHandler<GetAllIngredientsQuer
     }
     public async Task<Result<List<Ingredient>>> Handle(GetAllIngredientsQuery request, CancellationToken cancellationToken)
     {
-        var ingredients = _ingredientRepository.GetAll(cancellationToken);
+        var ingredients = await _ingredientRepository.GetAll(cancellationToken);
 
-        if((object)ingredients == null)
-            return Result.Failure<List<Ingredient>>(new Error("",""));
+        if(ingredients.Count == 0)
+            return Result.Failure<List<Ingredient>>(IngredientErrors.NoIngredientFound);
 
-        return Result.Success<List<Ingredient>>(ingredients.Result);
+        return Result.Success<List<Ingredient>>(ingredients);
     }
 }
 

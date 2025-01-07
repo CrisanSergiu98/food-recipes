@@ -10,26 +10,30 @@ public static class IngredientErrors
 
     public static Error NameMaxLengthExceeded = new Error(
         "Error.Ingredient.NameMaxLengthExceeded",
-        $"The name has to be shorter than {NameMaxLength}.");
+        $"Name longer than {NameMaxLength} characters.");
 
     public static Error NameIsEmpty = new Error(
         "Error.Ingredient.NameIsEmpty",
-        "The name cannot be empty");
+        "Name is empty.");
 
     public static Error DescriptionMaxLengthExceeded = new Error(
         "Error.Ingredient.DescriptionMaxLengthExceeded",
-        $"The description has to be shorter than {DescriptionMaxLength}.");
+        $"Description longer than {DescriptionMaxLength} characters.");
 
     public static Error DescriptionIsEmpty = new Error(
         "Error.Ingredient.DescriptionIsEmpty",
-        "The description cannot be empty");
+        "Description is empty.");
 
     public static Error NotFound = new Error(
         "Error.Ingredient",
-        "This ingredient cannot be found");
+        "Ingredient not found.");
 
     public static Error NameAlreadyExists = new Error(
         "Error.Ingredient",
-        "This ingredient name is already used");
+        "Ingredient name already used.");
+
+    public static Error NoIngredientFound = new Error(
+        "Error.Ingredient",
+        "No Ingredient found.");
 
 }

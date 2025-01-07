@@ -19,24 +19,25 @@ internal class UpdateIngredientCommandHandler : ICommandHandler<UpdateIngredient
     {
         var ingredient = await _ingredientRepository.GetById(request.Id, cancellationToken);
 
-        if ((object)ingredient == null)
+        if (ingredient is null)
             return Result.Failure(IngredientErrors.NotFound);
 
-        if (_ingredientRepository.NameExists(
-            request.Name, cancellationToken).Result && 
-            !(ingredient.Name.Value == request.Name))
+        bool nameAlreadyExists = await _ingredientRepository.NameExists(request.Name, cancellationToken);
+
+        if (nameAlreadyExists && !(ingredient.Name.Value == request.Name))
             return Result.Failure(IngredientErrors.NameAlreadyExists);
 
-        var nameResult = IngredientName.Create(request.Name);
+        var name = IngredientName.Create(request.Name);
 
-        var descriptionResult = IngredientDescription.Create(request.Description);
+        if (name.IsFailure)
+            return Result.Failure<Guid>(name.Error);
 
-        var result = Result.FirstFailureOrSuccess(nameResult, descriptionResult);
+        var description = IngredientDescription.Create(request.Description);
 
-        if (result.IsFailure)
-            return Result.Failure(result.Error);
+        if (description.IsFailure)
+            return Result.Failure<Guid>(description.Error);
 
-        var updateResult = ingredient.UpdateIngredient(nameResult.Value, descriptionResult.Value);
+        var updateResult = ingredient.UpdateIngredient(name.Value, description.Value);
 
         if (updateResult.IsFailure)
         {

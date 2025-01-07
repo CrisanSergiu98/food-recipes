@@ -1,5 +1,6 @@
 ﻿using FoodRecipes.Application.Abstractions.Messaging;
 using FoodRecipes.Application.Abstractions.Repositories;
+using FoodRecipes.Domain.Errors;
 using FoodRecipes.Domain.Ingredients;
 using FoodRecipes.Domain.Recipes;
 using FoodRecipes.Domain.Shared;
@@ -17,10 +18,10 @@ internal class SearchIngredientsByNameQueryHandler : IQueryHandler<SearchIngredi
     }
     public async Task<Result<IEnumerable<Ingredient>>> Handle(SearchIngredientsByNameQuery request, CancellationToken cancellationToken)
     {
-        var searchResult = _ingredientRepository.SearchByName(request.Name, cancellationToken).Result;
+        var searchResult = await _ingredientRepository.SearchByName(request.Name, cancellationToken);
 
-        if (searchResult is null)
-            return Result.Failure<IEnumerable<Ingredient>>(new Error("", ""));
+        if (searchResult.Count == 0)
+            return Result.Failure<IEnumerable<Ingredient>>(IngredientErrors.NoIngredientFound);
 
         return Result.Success<IEnumerable<Ingredient>>(searchResult);
     }

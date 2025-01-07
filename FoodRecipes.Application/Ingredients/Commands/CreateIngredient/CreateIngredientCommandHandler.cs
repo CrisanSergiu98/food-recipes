@@ -16,6 +16,7 @@ internal class CreateIngredientCommandHandler : ICommandHandler<CreateIngredient
     public async Task<Result<Guid>> Handle(CreateIngredientCommand request, CancellationToken cancellationToken)
     {
         var nameResult = _ingredientRepository.NameExists(request.Name, cancellationToken);
+
         if (nameResult.Result)
             return Result.Failure<Guid>(IngredientErrors.NameAlreadyExists);
 

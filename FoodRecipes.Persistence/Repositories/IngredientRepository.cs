@@ -5,7 +5,8 @@ namespace FoodRecipes.Persistence.Repositories
 {
     public class IngredientRepository : IIngredientRepository
     {        
-        private readonly List<Ingredient> _ingredients = DemoData.GetDemoIngredients();
+        //private readonly List<Ingredient> _ingredients = DemoData.GetDemoIngredients();
+        private readonly List<Ingredient> _ingredients = new List<Ingredient>();
 
         public Task<Ingredient?> GetById(Guid id, CancellationToken cancellationToken)
         {

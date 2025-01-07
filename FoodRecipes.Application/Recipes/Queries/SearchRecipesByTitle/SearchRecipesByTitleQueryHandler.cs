@@ -3,7 +3,7 @@ using FoodRecipes.Application.Abstractions.Repositories;
 using FoodRecipes.Domain.Recipes;
 using FoodRecipes.Domain.Shared;
 
-namespace FoodRecipes.Application.Recipes.Queries.GetRecipesByTitle;
+namespace FoodRecipes.Application.Recipes.Queries.SearchRecipesByTitle;
 
 internal class SearchRecipesByTitleQueryHandler : IQueryHandler<SearchRecipesByTitleQuery, Result<IEnumerable<Recipe>>>
 {

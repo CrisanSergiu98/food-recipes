@@ -4,7 +4,7 @@ using FoodRecipes.Application.Recipes.Commands.DeleteRecipe;
 using FoodRecipes.Application.Recipes.Commands.UpdateRecipe;
 using FoodRecipes.Application.Recipes.Queries.GetAllRecipes;
 using FoodRecipes.Application.Recipes.Queries.GetRecipeById;
-using FoodRecipes.Application.Recipes.Queries.GetRecipesByTitle;
+using FoodRecipes.Application.Recipes.Queries.SearchRecipesByTitle;
 using FoodRecipes.Presentation.Abstractions;
 using FoodRecipes.Presentation.Contracts.Recipes;
 using MediatR;
