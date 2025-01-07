@@ -6,28 +6,28 @@ using FoodRecipes.Domain.Ingredients.ValueObjects;
 using FoodRecipes.Domain.Shared;
 
 namespace FoodRecipes.Application.Ingredients.Commands.CreateIngredient;
-internal class CreateIngredientCommandHandler : ICommandHandler<CreateIngredientCommand, Result>
+internal class CreateIngredientCommandHandler : ICommandHandler<CreateIngredientCommand, Result<Guid>>
 {
     private readonly IIngredientRepository _ingredientRepository;
     public CreateIngredientCommandHandler(IIngredientRepository ingredientRepository)
     {
         _ingredientRepository = ingredientRepository;
     }
-    public async Task<Result> Handle(CreateIngredientCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Guid>> Handle(CreateIngredientCommand request, CancellationToken cancellationToken)
     {
         var nameResult = _ingredientRepository.NameExists(request.Name, cancellationToken);
         if (nameResult.Result)
-            return Result.Failure(IngredientErrors.NameAlreadyExists);
+            return Result.Failure<Guid>(IngredientErrors.NameAlreadyExists);
 
         var name = IngredientName.Create(request.Name);
 
         if(name.IsFailure)
-            return Result.Failure(name.Error);
+            return Result.Failure<Guid>(name.Error);
 
         var description = IngredientDescription.Create(request.Description);
 
         if(description.IsFailure)
-            return Result.Failure(description.Error);
+            return Result.Failure<Guid>(description.Error);
 
         var ingredient = Ingredient.Create(
             Guid.NewGuid(),
@@ -36,6 +36,6 @@ internal class CreateIngredientCommandHandler : ICommandHandler<CreateIngredient
 
         _ingredientRepository.Insert(ingredient.Value);
 
-        return Result.Success(ingredient.Value.Id);
+        return Result.Success<Guid>(ingredient.Value.Id);
     }
 }

@@ -1,4 +1,4 @@
-﻿using FoodRecipes.Application.Recipes.Dto;
+﻿using FoodRecipes.Application.Dto;
 
 namespace FoodRecipes.Presentation.Contracts.Recipes;
 

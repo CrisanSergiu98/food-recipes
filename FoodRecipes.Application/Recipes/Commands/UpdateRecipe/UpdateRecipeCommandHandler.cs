@@ -12,9 +12,12 @@ internal sealed class UpdateRecipeCommandHandler : ICommandHandler<UpdateRecipeC
     private readonly IRecipeRepository _recipeRepository;
     private readonly IIngredientRepository _ingredientRepository;
 
-    public UpdateRecipeCommandHandler(IRecipeRepository recipeRepository)
+    public UpdateRecipeCommandHandler(
+        IRecipeRepository recipeRepository,
+        IIngredientRepository ingredientRepository)
     {
         _recipeRepository = recipeRepository;
+        _ingredientRepository = ingredientRepository;
     }
     public async Task<Result> Handle(UpdateRecipeCommand request, CancellationToken cancellationToken)
     {
@@ -68,8 +71,11 @@ internal sealed class UpdateRecipeCommandHandler : ICommandHandler<UpdateRecipeC
             ingredients,
             steps);
 
+        if(updateResult.IsFailure)
+            return Result.Failure(updateResult.Error);
+
         _recipeRepository.Update(recipeResult.Result);
 
-        return Result.Success(updateResult);
+        return Result.Success();
     }
 }

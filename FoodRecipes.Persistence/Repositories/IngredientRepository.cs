@@ -1,12 +1,11 @@
 ﻿using FoodRecipes.Application.Abstractions.Repositories;
 using FoodRecipes.Domain.Ingredients;
-using FoodRecipes.Domain.Shared;
 
 namespace FoodRecipes.Persistence.Repositories
 {
     public class IngredientRepository : IIngredientRepository
-    {
-        private readonly List<Ingredient> _ingredients = new();
+    {        
+        private readonly List<Ingredient> _ingredients = DemoData.GetDemoIngredients();
 
         public Task<Ingredient?> GetById(Guid id, CancellationToken cancellationToken)
         {

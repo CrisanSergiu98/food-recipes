@@ -1,4 +1,4 @@
-﻿namespace FoodRecipes.Application.Recipes.Dto;
+﻿namespace FoodRecipes.Application.Dto;
 
 public record IngredientDto(
     Guid Id,

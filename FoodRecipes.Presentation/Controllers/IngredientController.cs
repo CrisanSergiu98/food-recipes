@@ -1,4 +1,5 @@
-﻿using FoodRecipes.Application.Ingredients.Commands.CreateIngredient;
+﻿using FoodRecipes.Application.Dto;
+using FoodRecipes.Application.Ingredients.Commands.CreateIngredient;
 using FoodRecipes.Application.Ingredients.Commands.DeleteIngredient;
 using FoodRecipes.Application.Ingredients.Commands.UpdateIngredient;
 using FoodRecipes.Application.Ingredients.Queries.GetAllIngredients;
@@ -24,7 +25,7 @@ public class IngredientController: ApiController
 
         var result = await Sender.Send(query);
 
-        return result.IsSuccess? Ok(result.Value) : BadRequest(result.Error);
+        return result.IsSuccess? Ok(DtoConverter.IngredientDtoConvert(result.Value)) : BadRequest(result.Error);
     }
 
     [HttpGet]
@@ -34,7 +35,7 @@ public class IngredientController: ApiController
 
         var result = await Sender.Send(query);
 
-        return result.IsSuccess? Ok(result) : BadRequest(result.Error);
+        return result.IsSuccess? Ok(DtoConverter.IngredeintsDtoConvert(result.Value)) : BadRequest(result.Error);
     }
 
     [HttpPost]
@@ -46,7 +47,7 @@ public class IngredientController: ApiController
 
         var result = await Sender.Send(command);
 
-        return result.IsSuccess? Ok(result): BadRequest(result.Error);
+        return result.IsSuccess? Ok(result.Value): BadRequest(result.Error);
     }
 
     [HttpPut]

@@ -7,7 +7,7 @@ using FoodRecipes.Domain.Shared;
 
 namespace FoodRecipes.Application.Recipes.Commands.CreateRecipe;
 
-internal sealed class CreateRecipeCommandHandler : ICommandHandler<CreateRecipeCommand, Result>
+internal sealed class CreateRecipeCommandHandler : ICommandHandler<CreateRecipeCommand, Result<Guid>>
 {
     private readonly IIngredientRepository _ingredients;
     private readonly IRecipeRepository _recipes;
@@ -20,20 +20,20 @@ internal sealed class CreateRecipeCommandHandler : ICommandHandler<CreateRecipeC
         _recipes = recipes;
     }
 
-    public async Task<Result> Handle(CreateRecipeCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Guid>> Handle(CreateRecipeCommand request, CancellationToken cancellationToken)
     {
         if(_recipes.TitleExists(request.Title, cancellationToken).Result)
-            return Result.Failure(RecipeErrors.TitleAlreadyExists);
+            return Result.Failure<Guid>(RecipeErrors.TitleAlreadyExists);
 
         var recipeTitle = RecipeTitle.Create(request.Title);
 
         if (recipeTitle.IsFailure)
-            return Result.Failure(recipeTitle.Error);
+            return Result.Failure<Guid>(recipeTitle.Error);
         
         var recipeDescription = RecipeDescription.Create(request.Description);
 
         if (recipeDescription.IsFailure)
-            return Result.Failure(recipeDescription.Error);
+            return Result.Failure<Guid>(recipeDescription.Error);
 
         HashSet<RecipeIngredient> ingredients = new HashSet<RecipeIngredient>();
         HashSet<RecipeStep> steps = new HashSet<RecipeStep>();
@@ -44,12 +44,12 @@ internal sealed class CreateRecipeCommandHandler : ICommandHandler<CreateRecipeC
             var ingredientIdResult = await _ingredients.GetById(ingredient.IngredientId, cancellationToken);
 
             if((object)ingredientIdResult == null)
-                return Result.Failure(IngredientErrors.NotFound);
+                return Result.Failure<Guid>(IngredientErrors.NotFound);
 
             var ingredientResult = RecipeIngredient.Create(ingredient.IngredientId, ingredient.Quantity, ingredient.Unit);
 
             if (ingredientResult.IsFailure)
-                return Result.Failure(ingredientResult.Error);
+                return Result.Failure<Guid>(ingredientResult.Error);
 
             ingredients.Add(ingredientResult.Value);
         }
@@ -59,7 +59,7 @@ internal sealed class CreateRecipeCommandHandler : ICommandHandler<CreateRecipeC
             var stepResult = RecipeStep.Create(step);
 
             if (stepResult.IsFailure)
-                return Result.Failure(stepResult.Error);
+                return Result.Failure<Guid>(stepResult.Error);
 
             steps.Add(stepResult.Value);
         }
@@ -72,10 +72,10 @@ internal sealed class CreateRecipeCommandHandler : ICommandHandler<CreateRecipeC
             steps);
 
         if(recipe.IsFailure)
-            return Result.Failure(recipe.Error);
+            return Result.Failure<Guid>(recipe.Error);
 
         _recipes.Insert(recipe.Value);
 
-        return Result.Success(recipe);
+        return Result.Success<Guid>(recipe.Value.Id);
     }    
 }

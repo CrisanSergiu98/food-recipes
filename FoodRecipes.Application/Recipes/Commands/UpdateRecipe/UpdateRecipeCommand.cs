@@ -1,5 +1,5 @@
 ﻿using FoodRecipes.Application.Abstractions.Messaging;
-using FoodRecipes.Application.Recipes.Dto;
+using FoodRecipes.Application.Dto;
 using FoodRecipes.Domain.Shared;
 
 namespace FoodRecipes.Application.Recipes.Commands.UpdateRecipe;

@@ -6,4 +6,4 @@ namespace FoodRecipes.Application.Ingredients.Commands.CreateIngredient;
 public record CreateIngredientCommand(
     string Name,
     string Description
-    ):ICommand<Result>;
+    ):ICommand<Result<Guid>>;

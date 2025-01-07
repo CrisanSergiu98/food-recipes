@@ -1,5 +1,5 @@
 ﻿using FoodRecipes.Application.Abstractions.Messaging;
-using FoodRecipes.Application.Recipes.Dto;
+using FoodRecipes.Application.Dto;
 using FoodRecipes.Domain.Recipes.Enums;
 using FoodRecipes.Domain.Recipes.ValueObjects;
 using FoodRecipes.Domain.Shared;
@@ -11,4 +11,4 @@ public record CreateRecipeCommand(
     string Description,
     HashSet<RecipeIngredientDto> Ingredients,
     HashSet<string> Steps
-    ):ICommand<Result>;
+    ):ICommand<Result<Guid>>;

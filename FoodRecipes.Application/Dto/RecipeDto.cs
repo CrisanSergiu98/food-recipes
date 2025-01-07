@@ -1,7 +1,8 @@
-﻿namespace FoodRecipes.Application.Recipes.Dto;
+﻿namespace FoodRecipes.Application.Dto;
 
 public record RecipeDto(
+    Guid Id,
     string Title,
-    string Decription,
+    string Description,
     List<RecipeIngredientDto> Ingredients,
     List<string> Steps);
