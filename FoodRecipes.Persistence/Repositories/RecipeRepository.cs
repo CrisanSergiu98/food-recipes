@@ -20,6 +20,15 @@ namespace FoodRecipes.Persistence.Repositories
             return Task.FromResult(_recipes.ToList());
         }
 
+        public Task<List<Recipe>> SearchByTitle(string title, CancellationToken cancellationToken)
+        {
+            var matchingRecipes = _recipes
+                .Where(r => r.Title.Value.Contains(title, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+
+            return Task.FromResult(matchingRecipes);
+        }
+
         public void Insert(Recipe recipe)
         {
             _recipes.Add(recipe);

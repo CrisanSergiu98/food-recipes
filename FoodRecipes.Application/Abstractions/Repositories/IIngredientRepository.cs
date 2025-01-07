@@ -12,6 +12,8 @@ public interface IIngredientRepository : IRepository<Ingredient>
     // Get all ingredients
     Task<List<Ingredient>> GetAll(CancellationToken cancellationToken);
 
+    Task<List<Ingredient>> SearchByName(string name, CancellationToken cancellationToken);
+
     Task<bool> NameExists(string name, CancellationToken cancellationToken);
 
     // Delete an ingredient by its ID

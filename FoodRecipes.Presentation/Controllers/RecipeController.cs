@@ -4,13 +4,14 @@ using FoodRecipes.Application.Recipes.Commands.DeleteRecipe;
 using FoodRecipes.Application.Recipes.Commands.UpdateRecipe;
 using FoodRecipes.Application.Recipes.Queries.GetAllRecipes;
 using FoodRecipes.Application.Recipes.Queries.GetRecipeById;
+using FoodRecipes.Application.Recipes.Queries.GetRecipesByTitle;
 using FoodRecipes.Presentation.Abstractions;
 using FoodRecipes.Presentation.Contracts.Recipes;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoodRecipes.Presentation.Controllers;
-[Route("api/recipe")]
+[Route("api/recipes")]
 public class RecipeController : ApiController
 {
     public RecipeController(ISender sender) : base(sender)
@@ -35,6 +36,16 @@ public class RecipeController : ApiController
         var result = await Sender.Send(query);
 
         return result.IsSuccess ? Ok(DtoConverter.RecipesDtoConvert(result.Value)) : BadRequest(result.Error);
+    }
+
+    [HttpGet("search")]
+    public async Task<IActionResult> SearchRecipes([FromQuery] string name)
+    {
+        var query = new SearchRecipesByTitleQuery(name);
+
+        var result = await Sender.Send(query);
+
+        return result.IsSuccess? Ok(DtoConverter.RecipesDtoConvert(result.Value)): BadRequest(result.Error);
     }
 
     [HttpPost]

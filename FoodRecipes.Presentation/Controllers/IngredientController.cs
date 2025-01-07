@@ -4,6 +4,7 @@ using FoodRecipes.Application.Ingredients.Commands.DeleteIngredient;
 using FoodRecipes.Application.Ingredients.Commands.UpdateIngredient;
 using FoodRecipes.Application.Ingredients.Queries.GetAllIngredients;
 using FoodRecipes.Application.Ingredients.Queries.GetIngredient;
+using FoodRecipes.Application.Ingredients.Queries.SearchIngredientByName;
 using FoodRecipes.Presentation.Abstractions;
 using FoodRecipes.Presentation.Contracts.Ingredients;
 using MediatR;
@@ -11,7 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FoodRecipes.Presentation.Controllers;
 
-[Route("api/ingredient")]
+[Route("api/ingredients")]
 public class IngredientController: ApiController
 {
     public IngredientController(ISender sender) : base(sender)
@@ -35,8 +36,19 @@ public class IngredientController: ApiController
 
         var result = await Sender.Send(query);
 
-        return result.IsSuccess? Ok(DtoConverter.IngredeintsDtoConvert(result.Value)) : BadRequest(result.Error);
+        return result.IsSuccess? Ok(DtoConverter.IngredientDtoConvert(result.Value)) : BadRequest(result.Error);
     }
+
+    [HttpGet("search")]
+    public async Task<IActionResult> SearchIngredients([FromQuery] string name)
+    {
+        var query = new SearchIngredientsByNameQuery(name);
+
+        var result = await Sender.Send(query);
+
+        return result.IsSuccess ? Ok(DtoConverter.IngredientDtoConvert(result.Value)) : BadRequest(result.Error);
+    }
+
 
     [HttpPost]
     public async Task<IActionResult> CreateIngredient([FromBody] IngredientCreationRequest request)

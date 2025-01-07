@@ -11,7 +11,9 @@ public interface IRecipeRepository : IRepository<Recipe>
 
     // Get all recipes
     Task<List<Recipe>> GetAll(CancellationToken cancellationToken = default);
-    
+
+    Task<List<Recipe>> SearchByTitle(string title, CancellationToken cancellationToken);
+
     Task<bool> TitleExists(string title, CancellationToken cancellationToken);
 
     // Update an existing recipe

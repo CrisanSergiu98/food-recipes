@@ -14,7 +14,7 @@ public static class DtoConverter
             );
     }
 
-    public static IEnumerable<IngredientDto> IngredeintsDtoConvert(IEnumerable<Ingredient> ingredients)
+    public static IEnumerable<IngredientDto> IngredientDtoConvert(IEnumerable<Ingredient> ingredients)
     {
         var result = new List<IngredientDto>();
 
