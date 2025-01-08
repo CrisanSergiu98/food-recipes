@@ -1,104 +1,42 @@
-# Food Recipe API
+# Food Recipes API
 
-This demo focuses on applying Domain Driven Design and Clean Architecture principles. It uses in-memory data and skips real data access and authentication/authorization features because it’s intended as a portfolio example rather than a production-ready system. It’s a practical reference for understanding how to build a well-structured and maintainable API.
+![Project Image](https://upload.wikimedia.org/wikipedia/en/8/8a/Mmfood.jpg)
 
-# Domain Model Documentation
+## Scope
+The Food Recipes API showcases my skills in C# and ASP.NET using Domain Driven Design (DDD) and Clean Architecture principles. It allows users to manage recipes and ingredients, demonstrating a robust and scalable solution for handling culinary data.
 
-## Recipe Aggregate
+## Table of Contents
+- [Features](#features)
+- [Architecture](#architecture)
+  - [Domain](Domain.md)
+  - [Application](Application.md)
+  - [Endpoints](Endpoints.md)
+- [Future Enhancements](#future-enhancements)
 
-The `Recipe` aggregate represents a recipe with a title, description, and collections of ingredients and steps.
+## Features
+- Domain Driven Design (DDD)
+- Clean Architecture
+- Rich Domain Model
+- Decoupled CQRS Messaging
 
-### Properties
+## Architecture
+This project follows Domain Driven Design (DDD) and Clean Architecture principles to ensure a well-structured and maintainable codebase.
 
-- **Title** (`RecipeTitle`): The title of the recipe.
-- **Description** (`RecipeDescription`): The description of the recipe.
-- **RecipeIngredients** (`_recipeIngredients`): Readonly collection of RecipeIngredient value objects.
-- **RecipeSteps** (`_recipeSteps`): Readonly collection of RecipeStep value objects.
+### Layers
+- **Domain**: Contains the core business logic and entities. This layer is independent of other layers and focuses on the business rules and logic.
+- **Application**: Handles the application logic and use cases. It acts as a mediator between the domain and presentation layers, ensuring that business rules are applied correctly.
+- **Presentation**: Manages the user interface and API endpoints. This layer is responsible for handling HTTP requests, processing user input, and returning appropriate responses.
+- **Persistence**: Deals with data storage and retrieval. This layer abstracts the data access logic and ensures that the domain remains independent of the data storage technology.
 
-```json
-{
-  "Id": "b84e31e2-9f56-4a3e-9c72-bd792476438f",
-  "Title": "Spaghetti Carbonara",
-  "Description": "A classic Italian pasta dish made with eggs, cheese, pancetta, and pepper.",
-  "Ingredients": [
-    {
-      "IngredientId": "a2b95a44-fb6b-4d42-b2a4-5b624e53b2e1",
-      "Quantity": 100.0,
-      "Measurement": "grams"
-    },
-    {
-      "IngredientId": "b3a07d4c-2c60-4b5b-b9a5-d2b15f6bb9c2",
-      "Quantity": 200.0,
-      "Measurement": "grams"
-    }
-  ],
-  "Steps": [
-    {
-      "Number": 1,
-      "Description": "Cook the spaghetti according to package instructions."
-    },
-    {
-      "Number": 2,
-      "Description": "In a separate pan, cook the pancetta until crispy."
-    }
-  ]
-}
-```
+For more detailed information, please refer to the following files:
+- [Domain](Domain.md)
+- [Application](Application.md)
+- [Endpoints](Endpoints.md)
 
----
+## Future Enhancements
+- Implement user authentication and authorization.
+- Add more detailed error handling and logging.
+- Expand the Persistence layer with actual data access.
+- Integrate with external APIs for additional data sources.
+- Develop a front-end application to interact with the API.
 
-## Ingredient Aggregate
-
-The `Ingredient` aggregate represents an ingredient with a name and description.
-
-### Properties
-
-- **Name** (`IngredientName`): The name of the ingredient.
-- **Description** (`IngredientDescription`): A description of the ingredient.
-
-```json
-{
-  "Id": "b84e31e2-9f56-4a3e-9c72-bd792476438f",
-  "Name": "Olive Oil",
-  "Description": "A high-quality extra virgin olive oil."
-}
-```
-
----
-
-## RecipeIngredient Value Object
-
-The `RecipeIngredient` value object represents an ingredient used in a recipe, including its ID, quantity, and measurement.
-
-### Properties
-
-- **IngredientId** (`Guid`): Unique identifier for the ingredient.
-- **Quantity** (`float`): Amount of the ingredient.
-- **Measurement** (`Measurement`): The unit of measurement for the quantity.
-
-```json
-{
-  "IngredientId": "a2b95a44-fb6b-4d42-b2a4-5b624e53b2e1",
-  "Quantity": 100.0,
-  "Measurement": "grams"
-}
-```
-
----
-
-## RecipeStep Value Object
-
-The `RecipeStep` value object represents a step in the recipe, including its step number and description.
-
-### Properties
-
-- **Number** (`int`): The step number in the recipe.
-- **Description** (`RecipeStepDescription`): Description of the step.
-
-```json
-{
-  "Number": 1,
-  "Description": "Cook the spaghetti according to package instructions."
-}
-
-```
