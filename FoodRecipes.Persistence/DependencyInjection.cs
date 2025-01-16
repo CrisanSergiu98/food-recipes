@@ -4,11 +4,16 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace FoodRecipes.Persistence;
 
+// Static class for configuring dependency injection
 public static class DependencyInjection
 {
-    public static IServiceCollection AddPersistence(this IServiceCollection services) 
+    // Extension method to add persistence services to the IServiceCollection
+    public static IServiceCollection AddPersistence(this IServiceCollection services)
     {
-        services.AddSingleton<IRecipeRepository,RecipeRepository>();
+        // Register the recipe repository as a singleton
+        services.AddSingleton<IRecipeRepository, RecipeRepository>();
+
+        // Register the ingredient repository as a singleton
         services.AddSingleton<IIngredientRepository, IngredientRepository>();
 
         return services;

@@ -4,8 +4,10 @@ using FoodRecipes.Domain.Shared;
 
 namespace FoodRecipes.Domain.Ingredients;
 
+// Domain model for an Ingredient
 public class Ingredient : AggregateRoot
 {
+    // Private constructor to initialize a new ingredient
     private Ingredient(
         Guid id,
         IngredientName ingredientName,
@@ -15,8 +17,11 @@ public class Ingredient : AggregateRoot
         Name = ingredientName;
         Description = ingredientDescription;
     }
+
     public IngredientName Name { get; set; }
     public IngredientDescription Description { get; set; }
+
+    // Factory method to create a new ingredient
     public static Result<Ingredient> Create(
         Guid id,
         IngredientName ingredientName,
@@ -27,6 +32,7 @@ public class Ingredient : AggregateRoot
         return Result.Success(ingredient);
     }
 
+    // Method to update the ingredient with new values
     public Result UpdateIngredient(IngredientName updatedIngredientName, IngredientDescription updatedIngredientDescription)
     {
         Name = updatedIngredientName;

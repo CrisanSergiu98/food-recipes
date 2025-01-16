@@ -4,13 +4,16 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoodRecipes.Presentation.Controllers;
+
 [Route("api/metadata")]
 public class MetadataController : ApiController
 {
+    // Constructor to initialize the sender
     public MetadataController(ISender sender) : base(sender)
     {
     }
 
+    // Endpoint to get all units
     [HttpGet("units")]
     public async Task<IActionResult> GetUnits()
     {
@@ -18,6 +21,6 @@ public class MetadataController : ApiController
 
         var result = await Sender.Send(query);
 
-        return result.IsSuccess? Ok(result.Value) : BadRequest(result.Error);
+        return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Error);
     }
 }

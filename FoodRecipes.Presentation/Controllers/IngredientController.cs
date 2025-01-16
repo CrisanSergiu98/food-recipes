@@ -13,12 +13,14 @@ using Microsoft.AspNetCore.Mvc;
 namespace FoodRecipes.Presentation.Controllers;
 
 [Route("api/ingredients")]
-public class IngredientController: ApiController
+public class IngredientController : ApiController
 {
+    // Constructor to initialize the sender
     public IngredientController(ISender sender) : base(sender)
     {
     }
 
+    // Endpoint to get an ingredient by its ID
     [HttpGet("{id}")]
     public async Task<IActionResult> GetIngredientById(Guid id)
     {
@@ -26,9 +28,10 @@ public class IngredientController: ApiController
 
         var result = await Sender.Send(query);
 
-        return result.IsSuccess? Ok(DtoConverter.IngredientDtoConvert(result.Value)) : BadRequest(result.Error);
+        return result.IsSuccess ? Ok(DtoConverter.IngredientDtoConvert(result.Value)) : BadRequest(result.Error);
     }
 
+    // Endpoint to get all ingredients
     [HttpGet]
     public async Task<IActionResult> GetAllIngredients()
     {
@@ -36,9 +39,10 @@ public class IngredientController: ApiController
 
         var result = await Sender.Send(query);
 
-        return result.IsSuccess? Ok(DtoConverter.IngredientDtoConvert(result.Value)) : BadRequest(result.Error);
+        return result.IsSuccess ? Ok(DtoConverter.IngredientDtoConvert(result.Value)) : BadRequest(result.Error);
     }
 
+    // Endpoint to search ingredients by name
     [HttpGet("search")]
     public async Task<IActionResult> SearchIngredients([FromQuery] string name)
     {
@@ -49,7 +53,7 @@ public class IngredientController: ApiController
         return result.IsSuccess ? Ok(DtoConverter.IngredientDtoConvert(result.Value)) : BadRequest(result.Error);
     }
 
-
+    // Endpoint to create a new ingredient
     [HttpPost]
     public async Task<IActionResult> CreateIngredient([FromBody] IngredientCreationRequest request)
     {
@@ -59,9 +63,10 @@ public class IngredientController: ApiController
 
         var result = await Sender.Send(command);
 
-        return result.IsSuccess? Ok(result.Value): BadRequest(result.Error);
+        return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Error);
     }
 
+    // Endpoint to update an existing ingredient
     [HttpPut]
     public async Task<IActionResult> UpdateIngredient([FromBody] IngredientUpdateRequest request)
     {
@@ -75,6 +80,7 @@ public class IngredientController: ApiController
         return result.IsSuccess ? Ok(result) : BadRequest(result.Error);
     }
 
+    // Endpoint to delete an ingredient by its ID
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteIngredient(Guid id)
     {
@@ -82,6 +88,6 @@ public class IngredientController: ApiController
 
         var result = await Sender.Send(command);
 
-        return result.IsSuccess? Ok(result) : BadRequest(result.Error);
+        return result.IsSuccess ? Ok(result) : BadRequest(result.Error);
     }
 }
