@@ -18,6 +18,7 @@ The Food Recipes API showcases my skills in C# and ASP.NET using Domain Driven D
 - Clean Architecture
 - Rich Domain Model
 - Decoupled CQRS Messaging
+- Repository Pattern
 
 ## Architecture
 This project follows Domain Driven Design (DDD) and Clean Architecture principles to ensure a well-structured and maintainable codebase.
