@@ -34,9 +34,10 @@ For more detailed information, please refer to the following files:
 - [Endpoints](Endpoints.md)
 
 ## Future Enhancements
+- Add Domain Events
 - Implement user authentication and authorization.
 - Add more detailed error handling and logging.
-- Expand the Persistence layer with actual data access.
 - Integrate with external APIs for additional data sources.
 - Develop a front-end application to interact with the API.
+- Expand the Persistence layer with actual data access.
 
