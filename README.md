@@ -4,6 +4,10 @@
 
 ## Scope
 The Food Recipes API showcases my skills in C# and ASP.NET using Domain Driven Design (DDD) and Clean Architecture principles. It allows users to manage recipes and ingredients, demonstrating a robust and scalable solution for handling culinary data.
+###Features Currently Out of Scope (May Be Added in the Future)
+- Data Access
+- Authentication and Authorization
+- Unit Testing
 
 ## Table of Contents
 - [Features](#features)
