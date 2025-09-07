@@ -1,8 +1,12 @@
 using FoodRecipes.Application;
 using FoodRecipes.Persistence;
 using FoodRecipes.Presentation;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlite("Data Source=foodrecipes.db"));
 
 // Adding Dependencies
 builder.Services.AddApplication();
@@ -28,5 +32,11 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    db.Database.Migrate(); // Applies any pending migrations
+}
 
 app.Run();

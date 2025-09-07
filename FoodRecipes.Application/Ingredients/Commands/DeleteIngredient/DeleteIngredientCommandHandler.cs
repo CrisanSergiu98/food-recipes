@@ -27,7 +27,7 @@ internal class DeleteIngredientCommandHandler : ICommandHandler<DeleteIngredient
             return Result.Failure(IngredientErrors.NotFound);
 
         // Delete the ingredient
-        _ingredientRepository.Delete(ingredient);
+        await _ingredientRepository.Delete(ingredient, cancellationToken);
 
         return Result.Success();
     }

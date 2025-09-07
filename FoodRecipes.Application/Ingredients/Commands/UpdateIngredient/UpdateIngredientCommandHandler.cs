@@ -54,7 +54,7 @@ internal class UpdateIngredientCommandHandler : ICommandHandler<UpdateIngredient
         }
 
         // Save the updated ingredient
-        _ingredientRepository.Update(ingredient);
+        await _ingredientRepository.Update(ingredient, cancellationToken);
 
         return Result.Success();
     }

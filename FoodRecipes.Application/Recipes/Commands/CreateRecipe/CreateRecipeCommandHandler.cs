@@ -88,7 +88,7 @@ internal sealed class CreateRecipeCommandHandler : ICommandHandler<CreateRecipeC
             return Result.Failure<Guid>(recipe.Error);
 
         // Save the new recipe
-        _recipes.Insert(recipe.Value);
+        _recipes.Insert(recipe.Value, cancellationToken);
 
         return Result.Success<Guid>(recipe.Value.Id);
     }

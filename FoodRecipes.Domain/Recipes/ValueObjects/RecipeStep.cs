@@ -10,7 +10,7 @@ namespace FoodRecipes.Domain.Recipes.ValueObjects
         private const int MaxLength = 300;
 
         // Private constructor to initialize the recipe step
-        private RecipeStep(string value)
+        public RecipeStep(string value)
         {
             Value = value;
         }

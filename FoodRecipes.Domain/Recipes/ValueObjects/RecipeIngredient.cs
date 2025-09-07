@@ -9,7 +9,7 @@ namespace FoodRecipes.Domain.Recipes.ValueObjects
     public sealed class RecipeIngredient : ValueObject
     {
         // Private constructor to initialize the recipe ingredient
-        private RecipeIngredient(
+        public RecipeIngredient(
             Guid ingredientId,
             IngredientQuantity quantity,
             Unit unit)

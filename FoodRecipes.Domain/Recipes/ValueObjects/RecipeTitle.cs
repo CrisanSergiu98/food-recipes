@@ -10,7 +10,7 @@ public sealed class RecipeTitle : ValueObject
     private static int MaxLength = 100;
 
     // Private constructor to initialize the recipe title
-    private RecipeTitle(string value)
+    public RecipeTitle(string value)
     {
         Value = value;
     }

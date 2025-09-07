@@ -13,7 +13,7 @@ public sealed class IngredientQuantity : ValueObject
     public float Value { get; private set; }
 
     // Private constructor to initialize the ingredient quantity
-    private IngredientQuantity(float value)
+    public IngredientQuantity(float value)
     {
         Value = value;
     }

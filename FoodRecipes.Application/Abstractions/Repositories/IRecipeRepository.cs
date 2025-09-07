@@ -7,23 +7,23 @@ namespace FoodRecipes.Application.Abstractions.Repositories;
 public interface IRecipeRepository : IRepository<Recipe>
 {
     // Retrieves a recipe by its ID
-    Task<Recipe?> GetById(Guid id, CancellationToken cancellationToken = default);
+        Task<Recipe?> GetById(Guid id, CancellationToken cancellationToken);
 
-    // Retrieves all recipes
-    Task<List<Recipe>> GetAll(CancellationToken cancellationToken = default);
+        // Retrieves all recipes
+        Task<List<Recipe>> GetAll(CancellationToken cancellationToken);
 
-    // Searches for recipes by title
-    Task<List<Recipe>> SearchByTitle(string title, CancellationToken cancellationToken);
+        // Searches for recipes by title (case-insensitive)
+        Task<List<Recipe>> SearchByTitle(string title, CancellationToken cancellationToken);
 
-    // Checks if a recipe title already exists
-    Task<bool> TitleExists(string title, CancellationToken cancellationToken);
+        // Checks if a recipe title already exists
+        Task<bool> TitleExists(string title, CancellationToken cancellationToken);
 
-    // Updates an existing recipe
-    void Update(Recipe recipe);
+        // Inserts a new recipe
+        Task Insert(Recipe recipe, CancellationToken cancellationToken);
 
-    // Deletes a recipe
-    void Delete(Recipe recipe);
+        // Updates an existing recipe
+        Task Update(Recipe recipe, CancellationToken cancellationToken);
 
-    // Inserts a new recipe
-    void Insert(Recipe recipe);
+        // Deletes a recipe
+        Task Delete(Recipe recipe, CancellationToken cancellationToken);
 }

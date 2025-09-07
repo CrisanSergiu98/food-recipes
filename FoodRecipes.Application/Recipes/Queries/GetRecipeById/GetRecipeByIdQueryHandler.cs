@@ -21,7 +21,7 @@ internal sealed class GetRecipeByIdQueryHandler : IQueryHandler<GetRecipeByIdQue
     public async Task<Result<Recipe>> Handle(GetRecipeByIdQuery request, CancellationToken cancellationToken)
     {
         // Retrieve the recipe by ID
-        var recipeResult = _recipeRepository.GetById(request.Id);
+        var recipeResult = _recipeRepository.GetById(request.Id, cancellationToken);
 
         // Check if the recipe exists
         if (recipeResult is null)

@@ -10,7 +10,7 @@ public sealed class IngredientDescription : ValueObject
     private const int MaxLength = 200;
 
     // Private constructor to initialize the ingredient description
-    private IngredientDescription(string value)
+    public IngredientDescription(string value)
     {
         Value = value;
     }

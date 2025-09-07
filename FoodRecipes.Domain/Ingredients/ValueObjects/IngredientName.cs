@@ -7,15 +7,15 @@ namespace FoodRecipes.Domain.Ingredients.ValueObjects
     // Value object for an ingredient name
     public sealed class IngredientName : ValueObject
     {
-        private const int MaxLength = 50;
+        private const int MaxLength = 50;        
 
-        // Private constructor to initialize the ingredient name
-        private IngredientName(string value)
+        // Private constructor to initialize the ingredient name // public for ef core
+        public IngredientName(string value)
         {
             Value = value;
         }
 
-        public string Value { get; set; }
+        public string Value { get; private set; }
 
         // Factory method to create a new ingredient name
         public static Result<IngredientName> Create(string value)

@@ -11,10 +11,10 @@ public static class DependencyInjection
     public static IServiceCollection AddPersistence(this IServiceCollection services)
     {
         // Register the recipe repository as a singleton
-        services.AddSingleton<IRecipeRepository, RecipeRepository>();
+        services.AddScoped<IRecipeRepository, RecipeRepository>();
 
         // Register the ingredient repository as a singleton
-        services.AddSingleton<IIngredientRepository, IngredientRepository>();
+        services.AddScoped<IIngredientRepository, IngredientRepository>();
 
         return services;
     }

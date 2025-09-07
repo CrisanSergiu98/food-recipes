@@ -1,64 +1,58 @@
 ﻿using FoodRecipes.Application.Abstractions.Repositories;
 using FoodRecipes.Domain.Ingredients;
+using Microsoft.EntityFrameworkCore;
 
-namespace FoodRecipes.Persistence.Repositories
+namespace FoodRecipes.Persistence.Repositories;
+
+public class IngredientRepository : IIngredientRepository
 {
-    // Repository class for managing ingredients
-    public class IngredientRepository : IIngredientRepository
+    private readonly ApplicationDbContext _context;
+
+    public IngredientRepository(ApplicationDbContext context)
     {
-        //private readonly List<Ingredient> _ingredients = DemoData.GetDemoIngredients();
-        private readonly List<Ingredient> _ingredients = new List<Ingredient>();
+        _context = context;
+    }
 
-        // Retrieves an ingredient by its ID
-        public Task<Ingredient?> GetById(Guid id, CancellationToken cancellationToken)
-        {
-            var ingredient = _ingredients.FirstOrDefault(i => i.Id == id);
-            return Task.FromResult(ingredient);
-        }
+    public async Task<Ingredient?> GetById(Guid id, CancellationToken cancellationToken)
+    {
+        return await _context.Ingredients
+            .FirstOrDefaultAsync(i => i.Id == id, cancellationToken);
+    }
 
-        // Retrieves all ingredients
-        public Task<List<Ingredient>> GetAll(CancellationToken cancellationToken)
-        {
-            return Task.FromResult(_ingredients.ToList());
-        }
+    public async Task<List<Ingredient>> GetAll(CancellationToken cancellationToken)
+    {
+        return await _context.Ingredients
+            .ToListAsync(cancellationToken);
+    }
 
-        // Searches for ingredients by name
-        public Task<List<Ingredient>> SearchByName(string name, CancellationToken cancellationToken)
-        {
-            var matchingIngredients = _ingredients
-                .Where(i => i.Name.Value.Contains(name, StringComparison.OrdinalIgnoreCase))
-                .ToList();
+    public async Task<List<Ingredient>> SearchByName(string name, CancellationToken cancellationToken)
+    {
+        return await _context.Ingredients
+            .Where(i => EF.Property<string>(i, "Name").Contains(name)) // safely bypass value object
+            .ToListAsync(cancellationToken);
+    }
 
-            return Task.FromResult(matchingIngredients);
-        }
+    public async Task Insert(Ingredient ingredient, CancellationToken cancellationToken)
+    {
+        await _context.Ingredients.AddAsync(ingredient, cancellationToken);
+        await _context.SaveChangesAsync(cancellationToken);
+    }
 
-        // Inserts a new ingredient
-        public void Insert(Ingredient ingredient)
-        {
-            _ingredients.Add(ingredient);
-        }
+    public async Task Update(Ingredient ingredient, CancellationToken cancellationToken)
+    {
+        _context.Ingredients.Update(ingredient);
+        await _context.SaveChangesAsync(cancellationToken);
+    }
 
-        // Updates an existing ingredient
-        public void Update(Ingredient ingredient)
-        {
-            var existingIngredient = _ingredients.FirstOrDefault(i => i.Id == ingredient.Id);
-            if (existingIngredient != null)
-            {
-                _ingredients.Remove(existingIngredient);
-                _ingredients.Add(ingredient);
-            }
-        }
+    public async Task Delete(Ingredient ingredient, CancellationToken cancellationToken)
+    {
+        _context.Ingredients.Remove(ingredient);
+        await _context.SaveChangesAsync(cancellationToken);
+    }    
 
-        // Deletes an ingredient
-        public void Delete(Ingredient ingredient)
-        {
-            _ingredients.Remove(ingredient);
-        }
-
-        // Checks if an ingredient name already exists
-        public async Task<bool> NameExists(string name, CancellationToken cancellationToken)
-        {
-            return await Task.FromResult(_ingredients.Any(ingredient => ingredient.Name.Value == name));
-        }
+    public async Task<bool> NameExists(string name, CancellationToken cancellationToken)
+    {
+        return await _context.Ingredients
+            .AnyAsync(i => i.Name.Value == name, cancellationToken);
     }
 }

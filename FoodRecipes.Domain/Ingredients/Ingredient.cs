@@ -7,6 +7,11 @@ namespace FoodRecipes.Domain.Ingredients;
 // Domain model for an Ingredient
 public class Ingredient : AggregateRoot
 {
+    protected Ingredient() : base(Guid.Empty)
+    {
+        // Required by EF Core
+    }
+
     // Private constructor to initialize a new ingredient
     private Ingredient(
         Guid id,

@@ -20,14 +20,14 @@ internal sealed class DeleteRecipeCommandHandler : ICommandHandler<DeleteRecipeC
     public async Task<Result> Handle(DeleteRecipeCommand request, CancellationToken cancellationToken)
     {
         // Retrieve the recipe by ID
-        var recipeResult = await _recipeRepository.GetById(request.Id);
+        var recipeResult = await _recipeRepository.GetById(request.Id, cancellationToken);
 
         // Check if the recipe exists
         if (recipeResult is null)
             return Result.Failure(RecipeErrors.RecipeNotFound);
 
         // Delete the recipe
-        _recipeRepository.Delete(recipeResult);
+        _recipeRepository.Delete(recipeResult, cancellationToken);
 
         return Result.Success();
     }

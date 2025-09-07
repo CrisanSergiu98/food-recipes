@@ -46,7 +46,7 @@ internal class CreateIngredientCommandHandler : ICommandHandler<CreateIngredient
             description.Value);
 
         // Save the new ingredient
-        _ingredientRepository.Insert(ingredient.Value);
+        await _ingredientRepository.Insert(ingredient.Value, cancellationToken);
 
         return Result.Success<Guid>(ingredient.Value.Id);
     }

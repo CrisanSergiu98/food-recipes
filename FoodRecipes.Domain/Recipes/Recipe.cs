@@ -11,6 +11,11 @@ public class Recipe : AggregateRoot
     private readonly HashSet<RecipeIngredient> _recipeIngredients = new();
     private readonly HashSet<RecipeStep> _recipeSteps = new();
 
+    protected Recipe() : base(Guid.Empty)
+    {
+        // Required by EF Core
+    }
+
     // Private constructor to initialize a new recipe
     private Recipe(
         Guid id,
