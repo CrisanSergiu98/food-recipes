@@ -11,4 +11,8 @@ public static class UserErrors
     public static Error UserEmailMaxLengthExceeded = new Error(
         "Error.User.UserEmailMaxLengthExceeded",
         "Email provided exceeds the maximum number of characters.");
+
+    public static Error LoginDetailsIncorrect = new Error(
+        "Error.User.LoginDetailsIncorrect",
+        "Login details provided are incorrect.");
 }

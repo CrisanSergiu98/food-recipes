@@ -21,9 +21,9 @@ internal sealed class UpdateRecipeCommandHandler : ICommandHandler<UpdateRecipeC
     
     public async Task<Result> Handle(UpdateRecipeCommand request, CancellationToken cancellationToken)
     {
-        var recipeResult = _recipeRepository.GetById(request.Id, cancellationToken);
+        var recipeResult = await _recipeRepository.GetById(request.Id, cancellationToken);
         
-        if (recipeResult.Result is null)
+        if (recipeResult is null)
             return Result.Failure(RecipeErrors.RecipeNotFound);
             
         var recipeTitle = RecipeTitle.Create(request.Title);
@@ -62,7 +62,7 @@ internal sealed class UpdateRecipeCommandHandler : ICommandHandler<UpdateRecipeC
             steps.Add(stepResult.Value);
         }
         
-        var updateResult = recipeResult.Result.UpdateRecipe(
+        var updateResult = recipeResult.UpdateRecipe(
             recipeTitle.Value,
             recipeDescription.Value,
             ingredients,
@@ -71,7 +71,7 @@ internal sealed class UpdateRecipeCommandHandler : ICommandHandler<UpdateRecipeC
         if (updateResult.IsFailure)
             return Result.Failure(updateResult.Error);
             
-        await _recipeRepository.Update(recipeResult.Result, cancellationToken);
+        await _recipeRepository.Update(recipeResult, cancellationToken);
 
         return Result.Success();
     }

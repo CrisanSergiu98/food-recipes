@@ -10,16 +10,17 @@ namespace FoodRecipes.Presentation.Controllers;
 [Route("api/authentication")]
 public class AuthenticationController : ApiController
 {
-    protected AuthenticationController(ISender sender) : base(sender)
+    public AuthenticationController(ISender sender) : base(sender)
     {
     }
+
     [HttpGet]
     public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
         var query = new LoginQuery(request.Email, request.Password);
 
         var result = await Sender.Send(query);
-        
+
         return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Error); ;
     }
     [HttpPost]

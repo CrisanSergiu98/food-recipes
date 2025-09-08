@@ -12,7 +12,7 @@ public class UserEmail : ValueObject
         Value = value;
     }
     public string Value { get; private set; }
-    public Result<UserEmail> Create(string value)
+    public static Result<UserEmail> Create(string value)
     {
         if (string.IsNullOrWhiteSpace(value))
         {
