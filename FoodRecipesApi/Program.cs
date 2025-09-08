@@ -8,15 +8,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite("Data Source=foodrecipes.db"));
 
-// Adding Dependencies
+// Adding Layer Dependencies
 builder.Services.AddApplication();
 builder.Services.AddPersistence();
 
 //Adding the controllers from the presentation layer
 builder.Services.AddControllers().AddApplicationPart(PresentationAssemblyReference.Assembly);
 //builder.Services.AddControllers();
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

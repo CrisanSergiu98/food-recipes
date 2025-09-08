@@ -5,7 +5,6 @@ using FoodRecipes.Domain.Recipes.ValueObjects;
 
 namespace FoodRecipes.Domain.Recipes;
 
-// Domain model for a Recipe
 public class Recipe : AggregateRoot
 {
     private readonly HashSet<RecipeIngredient> _recipeIngredients = new();
@@ -15,8 +14,7 @@ public class Recipe : AggregateRoot
     {
         // Required by EF Core
     }
-
-    // Private constructor to initialize a new recipe
+    
     private Recipe(
         Guid id,
         RecipeTitle title,
@@ -31,8 +29,7 @@ public class Recipe : AggregateRoot
     public RecipeDescription Description { get; private set; }
     public List<RecipeIngredient> Ingredients => _recipeIngredients.ToList();
     public List<RecipeStep> Steps => _recipeSteps.ToList();
-
-    // Factory method to create a new recipe
+    
     public static Result<Recipe> CreateRecipe(
         Guid id,
         RecipeTitle title,
@@ -44,8 +41,7 @@ public class Recipe : AggregateRoot
             id,
             title,
             description);
-
-        // Add ingredients to the recipe
+            
         foreach (var ingredient in ingredients)
         {
             var ingredientResult = recipe.CreateRecipeIngredient(ingredient);
@@ -53,8 +49,7 @@ public class Recipe : AggregateRoot
             if (ingredientResult.IsFailure)
                 return Result.Failure<Recipe>(ingredientResult.Error);
         }
-
-        // Add steps to the recipe
+        
         foreach (var step in steps)
         {
             var stepResult = recipe.CreateRecipeStep(step);
@@ -65,8 +60,7 @@ public class Recipe : AggregateRoot
 
         return Result.Success(recipe);
     }
-
-    // Method to add an ingredient to the recipe
+    
     public Result CreateRecipeIngredient(RecipeIngredient ingredientToAdd)
     {
         if (_recipeIngredients.Any(ingredient => ingredient.IngredientId == ingredientToAdd.IngredientId))
@@ -76,8 +70,7 @@ public class Recipe : AggregateRoot
 
         return Result.Success();
     }
-
-    // Method to update the recipe with new values
+    
     public Result UpdateRecipe(
         RecipeTitle title,
         RecipeDescription description,
@@ -89,8 +82,7 @@ public class Recipe : AggregateRoot
 
         _recipeIngredients.Clear();
         _recipeSteps.Clear();
-
-        // Add new ingredients to the recipe
+        
         foreach (var ingredient in ingredients)
         {
             var ingredientResult = CreateRecipeIngredient(ingredient);
@@ -98,8 +90,7 @@ public class Recipe : AggregateRoot
             if (ingredientResult.IsFailure)
                 return Result.Failure(ingredientResult.Error);
         }
-
-        // Add new steps to the recipe
+        
         foreach (var step in steps)
         {
             var stepResult = CreateRecipeStep(step);
@@ -110,8 +101,7 @@ public class Recipe : AggregateRoot
 
         return Result.Success();
     }
-
-    // Method to add a step to the recipe
+    
     public Result CreateRecipeStep(RecipeStep stepToAdd)
     {
         if (_recipeSteps.Any(step => step.Value == stepToAdd.Value))

@@ -8,12 +8,10 @@ namespace FoodRecipes.Presentation.Controllers;
 [Route("api/metadata")]
 public class MetadataController : ApiController
 {
-    // Constructor to initialize the sender
     public MetadataController(ISender sender) : base(sender)
     {
     }
-
-    // Endpoint to get all units
+    
     [HttpGet("units")]
     public async Task<IActionResult> GetUnits()
     {

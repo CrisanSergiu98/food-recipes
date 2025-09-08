@@ -28,7 +28,7 @@ public class IngredientRepository : IIngredientRepository
     public async Task<List<Ingredient>> SearchByName(string name, CancellationToken cancellationToken)
     {
         return await _context.Ingredients
-            .Where(i => EF.Property<string>(i, "Name").Contains(name)) // safely bypass value object
+            .Where(i => EF.Property<string>(i, "Name").Contains(name))
             .ToListAsync(cancellationToken);
     }
 
