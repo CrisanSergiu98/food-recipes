@@ -8,9 +8,9 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddPersistence(this IServiceCollection services)
     {
-        services.AddScoped<IRecipeRepository, RecipeRepository>();
-        
+        services.AddScoped<IRecipeRepository, RecipeRepository>();        
         services.AddScoped<IIngredientRepository, IngredientRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
 
         return services;
     }
