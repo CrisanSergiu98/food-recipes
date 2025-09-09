@@ -20,7 +20,7 @@ public sealed class RecipeIngredient : ValueObject
     public Guid IngredientId { get; private set; }
     public IngredientQuantity Quantity { get; private set; }
     public Unit Unit { get; private set; }
-    
+
     public static Result<RecipeIngredient> Create(
         Guid ingredientId,
         float quantity,
@@ -30,16 +30,16 @@ public sealed class RecipeIngredient : ValueObject
 
         if (quantityResult.IsFailure)
             return Result.Failure<RecipeIngredient>(quantityResult.Error);
-            
+
         if (!Enum.TryParse<Unit>(unit, true, out var parsedUnit))
             return Result.Failure<RecipeIngredient>(RecipeErrors.UnitIsNotValid);
 
         return new RecipeIngredient(
-        ingredientId,
-        quantityResult.Value,
-        parsedUnit);
+            ingredientId,
+            quantityResult.Value,
+            parsedUnit);
     }
-    
+
     public override IEnumerable<object> GetAtomicValues()
     {
         yield return IngredientId;

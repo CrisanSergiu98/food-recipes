@@ -1,17 +1,21 @@
 ﻿using FoodRecipes.Application.Recipes.Queries.GetAllUnits;
 using FoodRecipes.Presentation.Abstractions;
+
 using MediatR;
+
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoodRecipes.Presentation.Controllers;
 
 [Route("api/metadata")]
+[Authorize]
 public class MetadataController : ApiController
 {
     public MetadataController(ISender sender) : base(sender)
     {
     }
-    
+
     [HttpGet("units")]
     public async Task<IActionResult> GetUnits()
     {

@@ -39,6 +39,17 @@ namespace FoodRecipes.Persistence.Migrations
                     b.ToTable("Recipes");
                 });
 
+            modelBuilder.Entity("FoodRecipes.Domain.Users.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+                });
+
             modelBuilder.Entity("FoodRecipes.Domain.Ingredients.Ingredient", b =>
                 {
                     b.OwnsOne("FoodRecipes.Domain.Ingredients.ValueObjects.IngredientDescription", "Description", b1 =>
@@ -174,6 +185,51 @@ namespace FoodRecipes.Persistence.Migrations
                     b.Navigation("Steps");
 
                     b.Navigation("Title")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("FoodRecipes.Domain.Users.User", b =>
+                {
+                    b.OwnsOne("FoodRecipes.Domain.Users.ValueObjects.UserEmail", "Email", b1 =>
+                        {
+                            b1.Property<Guid>("UserId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("TEXT")
+                                .HasColumnName("Email");
+
+                            b1.HasKey("UserId");
+
+                            b1.ToTable("Users");
+
+                            b1.WithOwner()
+                                .HasForeignKey("UserId");
+                        });
+
+                    b.OwnsOne("FoodRecipes.Domain.Users.ValueObjects.UserPassword", "Password", b1 =>
+                        {
+                            b1.Property<Guid>("UserId")
+                                .HasColumnType("TEXT");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("TEXT")
+                                .HasColumnName("Password");
+
+                            b1.HasKey("UserId");
+
+                            b1.ToTable("Users");
+
+                            b1.WithOwner()
+                                .HasForeignKey("UserId");
+                        });
+
+                    b.Navigation("Email")
+                        .IsRequired();
+
+                    b.Navigation("Password")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

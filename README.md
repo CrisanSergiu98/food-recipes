@@ -35,9 +35,9 @@ This project follows Domain Driven Design (DDD) and Clean Architecture principle
 - **Persistence**: Deals with data storage and retrieval. This layer abstracts the data access logic and ensures that the domain remains independent of the data storage technology.
 
 For more detailed information, please refer to the following files:
-- [Domain](Domain.md)
-- [Application](Application.md)
-- [Endpoints](Endpoints.md)
+- [Domain](doc/Domain.md)
+- [Application](doc/Application.md)
+- [Endpoints](doc/Endpoints.md)
 
 ## Future Enhancements
 - Add Domain Events

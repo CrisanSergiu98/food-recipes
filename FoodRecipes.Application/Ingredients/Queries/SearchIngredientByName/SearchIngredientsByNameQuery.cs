@@ -6,4 +6,4 @@ namespace FoodRecipes.Application.Ingredients.Queries.SearchIngredientByName;
 
 public record SearchIngredientsByNameQuery(
     string Name
-    ):IQuery<Result<IEnumerable<Ingredient>>>;
+    ) : IQuery<Result<IEnumerable<Ingredient>>>;

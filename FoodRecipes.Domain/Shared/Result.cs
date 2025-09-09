@@ -45,7 +45,7 @@ public class Result
     /// Returns a success <see cref="Result"/>.
     /// </summary>
     /// <returns>A new instance of <see cref="Result"/> with the success flag set.</returns>
-    public static Result Success() => new Result(true, Error.None);
+    public static Result Success() => new(true, Error.None);
 
     /// <summary>
     /// Returns a success <see cref="Result{TValue}"/> with the specified value.
@@ -53,7 +53,7 @@ public class Result
     /// <typeparam name="TValue">The result type.</typeparam>
     /// <param name="value">The result value.</param>
     /// <returns>A new instance of <see cref="Result{TValue}"/> with the success flag set.</returns>
-    public static Result<TValue> Success<TValue>(TValue value) => new Result<TValue>(value, true, Error.None);
+    public static Result<TValue> Success<TValue>(TValue value) => new(value, true, Error.None);
 
     /// <summary>
     /// Creates a new <see cref="Result{TValue}"/> with the specified nullable value and the specified error.
@@ -71,7 +71,7 @@ public class Result
     /// </summary>
     /// <param name="error">The error.</param>
     /// <returns>A new instance of <see cref="Result"/> with the specified error and failure flag set.</returns>
-    public static Result Failure(Error error) => new Result(false, error);
+    public static Result Failure(Error error) => new(false, error);
 
     /// <summary>
     /// Returns a failure <see cref="Result{TValue}"/> with the specified error.
@@ -83,7 +83,7 @@ public class Result
     /// We're purposefully ignoring the nullable assignment here because the API will never allow it to be accessed.
     /// The value is accessed through a method that will throw an exception if the result is a failure result.
     /// </remarks>
-    public static Result<TValue> Failure<TValue>(Error error) => new Result<TValue>(default!, false, error);
+    public static Result<TValue> Failure<TValue>(Error error) => new(default!, false, error);
 
     /// <summary>
     /// Returns the first failure from the specified <paramref name="results"/>.

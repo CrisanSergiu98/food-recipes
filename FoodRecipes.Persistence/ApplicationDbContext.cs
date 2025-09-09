@@ -1,8 +1,11 @@
 using FoodRecipes.Domain.Ingredients;
 using FoodRecipes.Domain.Recipes;
+using FoodRecipes.Domain.Users;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace FoodRecipes.Persistence;
+
 public class ApplicationDbContext : DbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -10,6 +13,7 @@ public class ApplicationDbContext : DbContext
 
     public DbSet<Ingredient> Ingredients => Set<Ingredient>();
     public DbSet<Recipe> Recipes => Set<Recipe>();
+    public DbSet<User> Users => Set<User>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -3,4 +3,4 @@ using FoodRecipes.Domain.Shared;
 
 namespace FoodRecipes.Application.Recipes.Commands.DeleteRecipe;
 
-public record DeleteRecipeCommand(Guid Id):ICommand<Result>;
+public record DeleteRecipeCommand(Guid Id) : ICommand<Result>;

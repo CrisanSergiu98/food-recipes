@@ -10,7 +10,7 @@ internal sealed class UpdateRecipeCommandHandler : ICommandHandler<UpdateRecipeC
 {
     private readonly IRecipeRepository _recipeRepository;
     private readonly IIngredientRepository _ingredientRepository;
-    
+
     public UpdateRecipeCommandHandler(
         IRecipeRepository recipeRepository,
         IIngredientRepository ingredientRepository)
@@ -18,32 +18,32 @@ internal sealed class UpdateRecipeCommandHandler : ICommandHandler<UpdateRecipeC
         _recipeRepository = recipeRepository;
         _ingredientRepository = ingredientRepository;
     }
-    
+
     public async Task<Result> Handle(UpdateRecipeCommand request, CancellationToken cancellationToken)
     {
         var recipeResult = await _recipeRepository.GetById(request.Id, cancellationToken);
-        
+
         if (recipeResult is null)
             return Result.Failure(RecipeErrors.RecipeNotFound);
-            
+
         var recipeTitle = RecipeTitle.Create(request.Title);
         var recipeDescription = RecipeDescription.Create(request.Description);
-        
+
         var result = Result.FirstFailureOrSuccess(recipeTitle, recipeDescription);
 
         if (result.IsFailure)
             return Result.Failure(result.Error);
 
-        HashSet<RecipeIngredient> ingredients = new HashSet<RecipeIngredient>();
-        HashSet<RecipeStep> steps = new HashSet<RecipeStep>();
-        
+        HashSet<RecipeIngredient> ingredients = [];
+        HashSet<RecipeStep> steps = [];
+
         foreach (var ingredient in request.Ingredients)
         {
             var ingredientIdResult = await _ingredientRepository.GetById(ingredient.IngredientId, cancellationToken);
-            
-            if ((object)ingredientIdResult == null)
+
+            if (ingredientIdResult is null)
                 return Result.Failure(IngredientErrors.NotFound);
-                
+
             var ingredientResult = RecipeIngredient.Create(ingredient.IngredientId, ingredient.Quantity, ingredient.Unit);
 
             if (ingredientResult.IsFailure)
@@ -51,7 +51,7 @@ internal sealed class UpdateRecipeCommandHandler : ICommandHandler<UpdateRecipeC
 
             ingredients.Add(ingredientResult.Value);
         }
-        
+
         foreach (var step in request.Steps)
         {
             var stepResult = RecipeStep.Create(step);
@@ -61,7 +61,7 @@ internal sealed class UpdateRecipeCommandHandler : ICommandHandler<UpdateRecipeC
 
             steps.Add(stepResult.Value);
         }
-        
+
         var updateResult = recipeResult.UpdateRecipe(
             recipeTitle.Value,
             recipeDescription.Value,
@@ -70,7 +70,7 @@ internal sealed class UpdateRecipeCommandHandler : ICommandHandler<UpdateRecipeC
 
         if (updateResult.IsFailure)
             return Result.Failure(updateResult.Error);
-            
+
         await _recipeRepository.Update(recipeResult, cancellationToken);
 
         return Result.Success();

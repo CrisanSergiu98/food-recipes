@@ -4,5 +4,5 @@ using FoodRecipes.Domain.Shared;
 
 namespace FoodRecipes.Application.Recipes.Queries.GetRecipeById;
 
-public record GetRecipeByIdQuery(Guid Id):IQuery<Result<Recipe>>;
+public record GetRecipeByIdQuery(Guid Id) : IQuery<Result<Recipe>>;
 

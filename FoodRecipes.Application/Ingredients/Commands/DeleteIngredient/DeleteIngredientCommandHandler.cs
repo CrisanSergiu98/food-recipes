@@ -18,9 +18,9 @@ internal class DeleteIngredientCommandHandler : ICommandHandler<DeleteIngredient
     {
         var ingredient = await _ingredientRepository.GetById(request.Id, cancellationToken);
 
-        if ((object)ingredient == null)
+        if (ingredient is null)
             return Result.Failure(IngredientErrors.NotFound);
-            
+
         await _ingredientRepository.Delete(ingredient, cancellationToken);
 
         return Result.Success();

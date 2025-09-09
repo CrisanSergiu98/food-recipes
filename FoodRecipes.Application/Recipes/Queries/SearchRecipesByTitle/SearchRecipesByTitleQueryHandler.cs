@@ -9,16 +9,16 @@ namespace FoodRecipes.Application.Recipes.Queries.SearchRecipesByTitle;
 internal class SearchRecipesByTitleQueryHandler : IQueryHandler<SearchRecipesByTitleQuery, Result<IEnumerable<Recipe>>>
 {
     private readonly IRecipeRepository _recipeRepository;
-    
+
     public SearchRecipesByTitleQueryHandler(IRecipeRepository recipeRepository)
     {
         _recipeRepository = recipeRepository;
     }
-    
+
     public async Task<Result<IEnumerable<Recipe>>> Handle(SearchRecipesByTitleQuery request, CancellationToken cancellationToken)
     {
-        var searchResult = _recipeRepository.SearchByTitle(request.Title, cancellationToken).Result;
-        
+        var searchResult = await _recipeRepository.SearchByTitle(request.Title, cancellationToken);
+
         if (searchResult is null)
             return Result.Failure<IEnumerable<Recipe>>(RecipeErrors.NoRecipesFound);
 

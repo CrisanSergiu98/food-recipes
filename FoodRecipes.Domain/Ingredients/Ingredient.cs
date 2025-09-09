@@ -11,7 +11,7 @@ public class Ingredient : AggregateRoot
         // Required by EF Core
         // Do not use anywhere other than EF Core mapping
     }
-    
+
     private Ingredient(
         Guid id,
         IngredientName ingredientName,
@@ -24,7 +24,7 @@ public class Ingredient : AggregateRoot
 
     public IngredientName Name { get; set; }
     public IngredientDescription Description { get; set; }
-    
+
     public static Result<Ingredient> Create(
         Guid id,
         IngredientName ingredientName,
@@ -34,7 +34,7 @@ public class Ingredient : AggregateRoot
 
         return Result.Success(ingredient);
     }
-    
+
     public Result UpdateIngredient(IngredientName updatedIngredientName, IngredientDescription updatedIngredientDescription)
     {
         Name = updatedIngredientName;

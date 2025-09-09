@@ -4,4 +4,4 @@ using FoodRecipes.Domain.Shared;
 
 namespace FoodRecipes.Application.Recipes.Queries.GetAllRecipes;
 
-public record GetAllRecipesQuery():IQuery<Result<List<Recipe>>>;
+public record GetAllRecipesQuery() : IQuery<Result<List<Recipe>>>;

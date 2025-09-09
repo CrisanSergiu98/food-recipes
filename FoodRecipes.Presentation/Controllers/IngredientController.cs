@@ -7,18 +7,22 @@ using FoodRecipes.Application.Ingredients.Queries.GetIngredient;
 using FoodRecipes.Application.Ingredients.Queries.SearchIngredientByName;
 using FoodRecipes.Presentation.Abstractions;
 using FoodRecipes.Presentation.Contracts.Ingredients;
+
 using MediatR;
+
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FoodRecipes.Presentation.Controllers;
 
 [Route("api/ingredients")]
+[Authorize]
 public class IngredientController : ApiController
 {
     public IngredientController(ISender sender) : base(sender)
     {
     }
-    
+
     [HttpGet("{id}")]
     public async Task<IActionResult> GetIngredientById(Guid id)
     {
@@ -28,7 +32,7 @@ public class IngredientController : ApiController
 
         return result.IsSuccess ? Ok(DtoConverter.IngredientDtoConvert(result.Value)) : BadRequest(result.Error);
     }
-    
+
     [HttpGet]
     public async Task<IActionResult> GetAllIngredients()
     {
@@ -38,7 +42,7 @@ public class IngredientController : ApiController
 
         return result.IsSuccess ? Ok(DtoConverter.IngredientDtoConvert(result.Value)) : BadRequest(result.Error);
     }
-    
+
     [HttpGet("search")]
     public async Task<IActionResult> SearchIngredients([FromQuery] string name)
     {
@@ -48,7 +52,7 @@ public class IngredientController : ApiController
 
         return result.IsSuccess ? Ok(DtoConverter.IngredientDtoConvert(result.Value)) : BadRequest(result.Error);
     }
-    
+
     [HttpPost]
     public async Task<IActionResult> CreateIngredient([FromBody] IngredientCreationRequest request)
     {
@@ -60,7 +64,7 @@ public class IngredientController : ApiController
 
         return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Error);
     }
-    
+
     [HttpPut]
     public async Task<IActionResult> UpdateIngredient([FromBody] IngredientUpdateRequest request)
     {
@@ -73,7 +77,7 @@ public class IngredientController : ApiController
 
         return result.IsSuccess ? Ok(result) : BadRequest(result.Error);
     }
-    
+
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteIngredient(Guid id)
     {

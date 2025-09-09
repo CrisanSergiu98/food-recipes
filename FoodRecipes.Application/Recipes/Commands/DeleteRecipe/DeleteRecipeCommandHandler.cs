@@ -8,16 +8,16 @@ namespace FoodRecipes.Application.Recipes.Commands.DeleteRecipe;
 internal sealed class DeleteRecipeCommandHandler : ICommandHandler<DeleteRecipeCommand, Result>
 {
     private readonly IRecipeRepository _recipeRepository;
-    
+
     public DeleteRecipeCommandHandler(IRecipeRepository recipeRepository)
     {
         _recipeRepository = recipeRepository;
     }
-    
+
     public async Task<Result> Handle(DeleteRecipeCommand request, CancellationToken cancellationToken)
     {
         var recipeResult = await _recipeRepository.GetById(request.Id, cancellationToken);
-        
+
         if (recipeResult is null)
             return Result.Failure(RecipeErrors.RecipeNotFound);
 

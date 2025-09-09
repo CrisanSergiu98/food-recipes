@@ -10,13 +10,13 @@
         /// Represents a default error indicating no error condition.
         /// This is typically used to represent a successful state or a lack of an error.
         /// </summary>
-        public static readonly Error None = new Error(string.Empty, string.Empty);
+        public static readonly Error None = new(string.Empty, string.Empty);
 
         /// <summary>
         /// Represents an error where a specified value is null.
         /// This is a predefined error instance used to indicate null values in results or operations.
         /// </summary>
-        public static readonly Error NullValue = new Error("Error.NullValue", "The specified result value is null");
+        public static readonly Error NullValue = new("Error.NullValue", "The specified result value is null");
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Error"/> class with a specific code and message.

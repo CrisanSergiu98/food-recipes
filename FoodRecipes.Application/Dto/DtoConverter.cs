@@ -58,7 +58,7 @@ public static class DtoConverter
         {
             result.Add(RecipeDtoConvert(recipe));
         }
-        
+
         return result;
     }
 }

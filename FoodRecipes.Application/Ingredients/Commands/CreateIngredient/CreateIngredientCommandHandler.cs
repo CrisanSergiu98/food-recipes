@@ -10,7 +10,7 @@ namespace FoodRecipes.Application.Ingredients.Commands.CreateIngredient;
 internal class CreateIngredientCommandHandler : ICommandHandler<CreateIngredientCommand, Result<Guid>>
 {
     private readonly IIngredientRepository _ingredientRepository;
-    
+
     public CreateIngredientCommandHandler(IIngredientRepository ingredientRepository)
     {
         _ingredientRepository = ingredientRepository;
@@ -26,19 +26,19 @@ internal class CreateIngredientCommandHandler : ICommandHandler<CreateIngredient
 
         if (name.IsFailure)
             return Result.Failure<Guid>(name.Error);
-            
+
         var description = IngredientDescription.Create(request.Description);
 
         if (description.IsFailure)
             return Result.Failure<Guid>(description.Error);
-            
+
         var ingredient = Ingredient.Create(
             Guid.NewGuid(),
             name.Value,
             description.Value);
-            
+
         await _ingredientRepository.Insert(ingredient.Value, cancellationToken);
 
-        return Result.Success<Guid>(ingredient.Value.Id);
+        return Result.Success(ingredient.Value.Id);
     }
 }

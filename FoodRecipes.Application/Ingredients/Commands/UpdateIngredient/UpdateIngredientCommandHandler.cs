@@ -43,7 +43,7 @@ internal class UpdateIngredientCommandHandler : ICommandHandler<UpdateIngredient
         {
             return Result.Failure(updateResult.Error);
         }
-        
+
         await _ingredientRepository.Update(ingredient, cancellationToken);
 
         return Result.Success();

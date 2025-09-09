@@ -1,5 +1,6 @@
 ﻿using FoodRecipes.Application.Abstractions.Repositories;
 using FoodRecipes.Domain.Ingredients;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace FoodRecipes.Persistence.Repositories;
@@ -48,7 +49,7 @@ public class IngredientRepository : IIngredientRepository
     {
         _context.Ingredients.Remove(ingredient);
         await _context.SaveChangesAsync(cancellationToken);
-    }    
+    }
 
     public async Task<bool> NameExists(string name, CancellationToken cancellationToken)
     {

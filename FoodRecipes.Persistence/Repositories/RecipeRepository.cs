@@ -1,5 +1,6 @@
 ﻿using FoodRecipes.Application.Abstractions.Repositories;
 using FoodRecipes.Domain.Recipes;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace FoodRecipes.Persistence.Repositories;

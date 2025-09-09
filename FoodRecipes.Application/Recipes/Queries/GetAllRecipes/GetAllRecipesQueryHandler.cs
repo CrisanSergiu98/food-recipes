@@ -9,19 +9,19 @@ namespace FoodRecipes.Application.Recipes.Queries.GetAllRecipes;
 internal class GetAllRecipesQueryHandler : IQueryHandler<GetAllRecipesQuery, Result<List<Recipe>>>
 {
     private readonly IRecipeRepository _recipeRepository;
-    
+
     public GetAllRecipesQueryHandler(IRecipeRepository recipeRepository)
     {
         _recipeRepository = recipeRepository;
     }
-    
+
     public async Task<Result<List<Recipe>>> Handle(GetAllRecipesQuery request, CancellationToken cancellationToken)
     {
-        var result = _recipeRepository.GetAll(cancellationToken);
+        var result = await _recipeRepository.GetAll(cancellationToken);
 
         if (result is null)
             return Result.Failure<List<Recipe>>(RecipeErrors.NoRecipesFound);
 
-        return Result.Success(result.Result);
+        return Result.Success(result);
     }
 }
