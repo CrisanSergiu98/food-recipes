@@ -1,49 +1,81 @@
-# Food Recipes API
+# 🍽️ Food Recipes API
 
 ![Project Image](https://upload.wikimedia.org/wikipedia/en/8/8a/Mmfood.jpg)
 
-## Scope
-The Food Recipes API showcases my skills in C# and ASP.NET using Domain Driven Design (DDD) and Clean Architecture principles. It allows users to manage recipes and ingredients, demonstrating a robust and scalable solution for handling culinary data.
+## 📌 Overview
+The **Food Recipes API** is a showcase of my expertise in **C#** and **ASP.NET**, built using **Domain Driven Design (DDD)** and **Clean Architecture** principles. It enables users to manage recipes and ingredients through a scalable, maintainable, and modular backend system.
 
-### Features Currently Out of Scope (May Be Added in the Future)
-- Data Access
-- Authentication and Authorization
-- Unit Testing
+This project also includes a fully functional **data access layer** implemented with **Entity Framework Core** and a **local SQLite database**, providing a lightweight and efficient persistence solution.
 
-## Table of Contents
+---
+
+## 📚 Table of Contents
 - [Features](#features)
 - [Architecture](#architecture)
-  - [Domain](Domain.md)
-  - [Application](Application.md)
-  - [Endpoints](Endpoints.md)
+  - [Domain](doc/Domain.md)
+  - [Application](doc/Application.md)
+  - [Endpoints](doc/Endpoints.md)
 - [Future Enhancements](#future-enhancements)
 
-## Features
-- Domain Driven Design (DDD)
-- Clean Architecture
-- Rich Domain Model
-- Decoupled CQRS Messaging
-- Repository Pattern
+---
 
-## Architecture
-This project follows Domain Driven Design (DDD) and Clean Architecture principles to ensure a well-structured and maintainable codebase.
+## 🚀 Features
+- ✅ Domain Driven Design (DDD)
+- ✅ Clean Architecture
+- ✅ Rich Domain Model
+- ✅ Decoupled CQRS Messaging
+- ✅ Repository Pattern
+- ✅ EF Core with SQLite Integration
 
-### Layers
-- **Domain**: Contains the core business logic and entities. This layer is independent of other layers and focuses on the business rules and logic.
-- **Application**: Handles the application logic and use cases. It acts as a mediator between the domain and presentation layers, ensuring that business rules are applied correctly.
-- **Presentation**: Manages the user interface and API endpoints. This layer is responsible for handling HTTP requests, processing user input, and returning appropriate responses.
-- **Persistence**: Deals with data storage and retrieval. This layer abstracts the data access logic and ensures that the domain remains independent of the data storage technology.
+---
 
-For more detailed information, please refer to the following files:
+## 🏗️ Architecture
+
+This API follows a layered architecture inspired by DDD and Clean Architecture to ensure separation of concerns and long-term maintainability.
+
+### 🔹 Domain Layer
+- Core business logic and entities
+- Independent of other layers
+- Focused on rules and invariants
+
+### 🔹 Application Layer
+- Orchestrates use cases and business workflows
+- Mediates between Domain and Presentation
+- Applies business rules consistently
+
+### 🔹 Presentation Layer
+- Handles HTTP requests and responses
+- API controllers for user interaction
+- Maps DTOs to domain models
+
+### 🔹 Persistence Layer
+- Implements data access using **EF Core**
+- Uses a **local SQLite database** for lightweight storage
+- Abstracted via repositories to maintain domain purity
+
+📄 For detailed breakdowns, refer to:
 - [Domain](doc/Domain.md)
 - [Application](doc/Application.md)
 - [Endpoints](doc/Endpoints.md)
 
-## Future Enhancements
-- Add Domain Events
-- Implement user authentication and authorization.
-- Add more detailed error handling and logging.
-- Integrate with external APIs for additional data sources.
-- Develop a front-end application to interact with the API.
-- Expand the Persistence layer with actual data access.
+---
 
+## 🚧 Out-of-Scope (for now)
+These features are not yet implemented but may be added in future iterations:
+- Authentication & Authorization
+- Advanced Unit Testing
+- External API Integrations
+
+---
+
+## 🔮 Future Enhancements
+- Add Domain Events for richer business logic
+- Implement user authentication and role-based access
+- Improve error handling and structured logging
+- Integrate with third-party recipe or nutrition APIs
+- Build a front-end client (e.g., React or Blazor)
+- Expand Persistence with migrations and seed data
+
+---
+
+💡 *This project is a foundation for more advanced culinary data systems. Contributions and feedback are welcome!*
